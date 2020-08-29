@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>VASP - Bader 电荷分析计算 - chempeng</title>
+    <meta property="og:title" content="VASP - Bader 电荷分析计算 - chempeng">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="使用的工具： VASP, Bader， chgsum.pl
+[&amp;hellip;] 使用 VASP 进行 Bader 电荷分析，可以得到原子周围的电子数，从而近似得到原子的化合价。本文简单介绍 Bader 程序的安装与使用 VASP 进行 bader 分析的计算过程。
+[&amp;hellip;] 官方网站：http://theory.cm.utexas.edu/henkelman/code/bader/ &amp;hellip;">
+      <meta property="og:description" content="使用的工具： VASP, Bader， chgsum.pl
+[&amp;hellip;] 使用 VASP 进行 Bader 电荷分析，可以得到原子周围的电子数，从而近似得到原子的化合价。本文简单介绍 Bader 程序的安装与使用 VASP 进行 bader 分析的计算过程。
+[&amp;hellip;] 官方网站：http://theory.cm.utexas.edu/henkelman/code/bader/ &amp;hellip;">
+      
+    
+
+    
+    
+    <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/chempeng/image/img/2017-10-24-1.jpg">
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">chempeng</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/">Home</a></li>
+  
+  <li><a href="/about/">About</a></li>
+  
+  <li><a href="/categories/">Categories</a></li>
+  
+  <li><a href="/tags/">Tags</a></li>
+  
+  <li><a href="/index.xml">Subscribe</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>VASP - Bader 电荷分析计算</h1>
+
+<h3>chempeng
+  /  2017-10-24</h3>
+<hr>
+
+
+      </header>
+
+
+
+<blockquote>
+<p>使用的工具： VASP, <a href="http://pan.baidu.com/s/1gftip1p">Bader</a>， <a href="http://pan.baidu.com/s/1eRV3M8M">chgsum.pl</a></p>
+</blockquote>
+<p>使用 VASP 进行 Bader 电荷分析，可以得到原子周围的电子数，从而近似得到原子的化合价。本文简单介绍 Bader 程序的安装与使用 VASP 进行 bader 分析的计算过程。</p>
+<h1 id="bader-程序的安装">Bader 程序的安装</h1>
+<p>官方网站：http://theory.cm.utexas.edu/henkelman/code/bader/</p>
+<blockquote>
+<p>Download
+Select the appropriate platform to download a binary of the Bader analysis program:</p>
+</blockquote>
+<ul>
+<li><a href="http://theory.cm.utexas.edu/henkelman/code/bader/download/bader_lnx_64.tar.gz">Linux x86-64 (ifort)</a></li>
+<li><a href="http://theory.cm.utexas.edu/henkelman/code/bader/download/bader_osx_gfortran.tar.gz">Mac OS X, gfortran (ifort)</a>
+The F90 source code is also available:</li>
+<li><a href="http://theory.cm.utexas.edu/henkelman/code/bader/download/bader.tar.gz">Source Code (v1.0 01/11/17)</a></li>
+</ul>
+<p>对于二进制文件，解压后添加可执行权限即可运行使用。</p>
+<pre><code>tar zxvf bader_lnx_64.tar.gz
+chmod +x bader
+</code></pre><p>对于源码，需进行如下编译</p>
+<pre><code>tar zxvf bader.tar.gz
+cd bader
+cp makefile.lnx_ifort makefile
+make
+</code></pre><h1 id="vasp-计算处理">VASP 计算处理</h1>
+<p>静态计算时，INCAR 添加标签 <code>LAECHG =.TRUE.</code></p>
+<pre><code>SYSTEM=x
+ISTART=0
+ENCUT=350
+EDIFF=1E-5
+IBRION=2
+POTIM=0.25
+NSW=0
+EDIFFG=-1E-2
+ISMEAR=0
+SIGMA=0.05
+PREC=ACCURATE
+ISIF=2
+NPAR=4
+#LWAVE=FALSE
+#LCHARG=FALSE
+LREAL=Auto
+#IALGO=48
+ISYM=0
+LAECHG =.TRUE.
+</code></pre><p>提交任务，计算完成后生成文件 AECCAR0、AECCAR1、AECCAR2，执行</p>
+<pre><code>./chgsum.pl AECCAR0 AECCAR2
+./bader CHGCAR -ref CHGCAR_sum
+</code></pre><p>生成文件 ACF.dat、AVF.dat、BCF.dat，ACF.dat 文件包含价电子的电荷信息，如下所示</p>
+<pre><code>    #         X           Y           Z       CHARGE      MIN DIST   ATOMIC VOL
+ --------------------------------------------------------------------------------
+    1    0.527018    1.280693    0.807511    3.177949     1.016776    28.833043
+    2    2.702306    3.774240    2.704479    3.181001     1.011214    28.792487
+    3    4.809415    1.279392    0.807589    3.181014     0.999778    28.866225
+    4    6.981827    3.774677    2.706145    3.175851     1.011242    28.765625
+    5    9.084467    1.282535    0.806659    3.183565     1.009432    28.813555
+    ...
+</code></pre><p>可做绘图处理</p>
+<p><img src="https://cdn.jsdelivr.net/gh/chempeng/image/img/2017-10-24-1.jpg" alt=""></p>
+<h1 id="相关参考">相关参考</h1>
+<ol>
+<li><a href="http://theory.cm.utexas.edu/henkelman/code/bader/">Code: Bader Charge Analysis</a></li>
+<li><a href="https://jingyan.baidu.com/article/d5a880eb8d3a1f13f147cc1d.html">VASP电荷分析之bader分析</a></li>
+</ol>
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/post/2017/09/16/graphic-instructor-%E8%BF%9B%E8%A1%8C%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97vasp%E4%B8%8E%E5%88%86%E6%9E%90/">Graphic Instructor 进行量化计算（VASP）与分析</a></span>
+  <span class="nav-next"><a href="/post/2017/11/29/the-plane-average-electron-difference-in-vasp/">The plane-average electron difference in VASP</a> &rarr;</span>
+</nav>
+
+
+
+
+
+<script src="//yihui.org/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.org/js/center-img.js"></script>
+
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  
+  <hr>
+  <div class="copyright">© <a href="https://chempeng.github.io/">chempeng</a> 2020 | <a href="https://www.zhihu.com/people/chempeng">Zhihu</a> | <a href="https://weibo.com/u/3043897063">Weibo</a></div>
+  
+  </footer>
+  </article>
+  
+  </body>
+</html>
+

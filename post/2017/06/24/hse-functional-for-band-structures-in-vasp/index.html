@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>HSE Functional for Band Structures in VASP - chempeng</title>
+    <meta property="og:title" content="HSE Functional for Band Structures in VASP - chempeng">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="VASP the GUIDE: Hartree-Fock (HF) type and hybrid functional calculations
+VASPwiki: Tutorial on hybrid functionals
+Related discussion: How can I calculate the DOS by using HSE06 in vasp?
+[&amp;hellip;] &amp;hellip;">
+      <meta property="og:description" content="VASP the GUIDE: Hartree-Fock (HF) type and hybrid functional calculations
+VASPwiki: Tutorial on hybrid functionals
+Related discussion: How can I calculate the DOS by using HSE06 in vasp?
+[&amp;hellip;] &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">chempeng</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/">Home</a></li>
+  
+  <li><a href="/about/">About</a></li>
+  
+  <li><a href="/categories/">Categories</a></li>
+  
+  <li><a href="/tags/">Tags</a></li>
+  
+  <li><a href="/index.xml">Subscribe</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>HSE Functional for Band Structures in VASP</h1>
+
+<h3>chempeng
+  /  2017-06-24</h3>
+<hr>
+
+
+      </header>
+
+
+
+<h1 id="related-reading">Related Reading</h1>
+<blockquote>
+<p>VASP the GUIDE: <a href="http://cms.mpi.univie.ac.at/vasp/vasp/Hartree_Fock_HF_type_hybrid_functional_calculations.html">Hartree-Fock (HF) type and hybrid functional calculations</a><br>
+VASPwiki: <a href="http://cms.mpi.univie.ac.at/wiki/index.php/Tutorial_on_hybrid_functionals">Tutorial on hybrid functionals</a><br>
+Related discussion: <a href="https://www.researchgate.net/post/How_can_I_calculate_the_DOS_by_using_HSE06_in_vasp">How can I calculate the DOS by using HSE06 in vasp?</a></p>
+</blockquote>
+<p><strong>These instructions are taken from the Vasp forum</strong></p>
+<p>Band structures using hybrid functionals have to be calculated the following way:</p>
+<ol>
+<li>
+<p>First perform a selfconsistent Hartree-Fock/HSE calculation using a conventional KPOINTS file.</p>
+</li>
+<li>
+<p>Copy the IBZKPT file to KPOINTS, and explicitely add all desired k-points along high-symmetry lines of the BZ that are needed for the bandstructure plot. Add the points at the end of the KPOINTS file, but set the weights of these added k-points to 0.</p>
+</li>
+<li>
+<p>Do not forget to set the number of k-points in KPOINTS correctly (to the number of the k-points used in the standard mesh PLUS the number of the k-points along the lines), such that all k-points are used for the calculations.</p>
+</li>
+<li>
+<p>NKRED can not be used.</p>
+</li>
+<li>
+<p>Perform a second VASP run:
+It is recommended to use the Davidson algorithm, since it converges that eigen energies at the new k-points fastest. Since VASP terminates when the total energy is converged to a certain threshold, it is important to force VASP to do a minimum number of steps, so that the orbitals at the new k-points are fully converged (note: since their weight is zero, they do not contribute to the total energy). This can be done using e.g.</p>
+</li>
+</ol>
+<pre><code>ALGO = N ; NELMIN = 5 ! Davidson, minimum 5 scf-steps
+IMIX = 1 ! Use simple charge mixer, since 
+</code></pre><p>Pulay might blow up</p>
+<ol start="6">
+<li>The KS-eigenvalues of the states along the high-symmetry lines are written in OUTCAR, EIGENVAL, vasprun.xml; please cut the k-points required for the bandstructure from one of these files and proceed as usual (using p4vasp or any other graphics tool you usually use to produce bandstructure-plots)</li>
+</ol>
+<p><strong>Note</strong>: A Hartee-Fock calculation can NOT be continued from an existing CHGCAR file, since the non-local exchange is not determined by the charge density but by the density matrix and/or the KS-orbitals.</p>
+<h1 id="hse06-calculated-records">HSE06 calculated records</h1>
+<h2 id="1-gamma-scf">1. Gamma-scf</h2>
+<p>After structural optimization <code>opt</code>[1]</p>
+<pre><code>cp -rf opt Gamma-scf
+</code></pre><h3 id="incar">INCAR</h3>
+<pre><code>SYSTEM=x
+ISTART=0
+ENCUT=350
+EDIFF=1E-5
+IBRION=2
+POTIM=0.25
+NSW=0
+EDIFFG=-1E-2
+ISMEAR=0
+SIGMA=0.05
+PREC=ACCURATE
+ISIF=2
+NPAR=4
+#LWAVE=FALSE
+#LCHARG=FALSE
+LREAL=Auto
+#IALGO=48
+ISYM=0
+</code></pre><h3 id="kpoints">KPOINTS</h3>
+<pre><code>auto
+0
+Gamma
+1 1 1
+0 0 0
+</code></pre><h3 id="poscar">POSCAR</h3>
+<pre><code>cp ../opt/CONTCAR POSCAR
+</code></pre><h2 id="2-1hse-scf">2. 1hse-scf</h2>
+<pre><code>cp -rf Gamma-scf 1hse-scf
+</code></pre><h3 id="incar-1">INCAR</h3>
+<pre><code>SYSTEM=x
+ISTART=1
+ENCUT=350
+EDIFF=1E-5
+IBRION=2
+POTIM=0.25
+NSW=0
+EDIFFG=-1E-2
+ISMEAR=0
+SIGMA=0.05
+PREC=ACCURATE
+ISIF=2
+NPAR=4
+#LWAVE=FALSE
+#LCHARG=FALSE
+LREAL=Auto
+#IALGO=48
+ISYM=0
+LHFCALC=.TRUE.
+HFSCREEN=0.2
+ALGO=Damped
+TIME=0.4
+</code></pre><h2 id="3-2hse-scf">3. 2hse-scf</h2>
+<pre><code>cp -rf 1hse-scf 2hse-scf
+</code></pre><h3 id="incar-2">INCAR</h3>
+<pre><code>SYSTEM=x
+ISTART=1
+ENCUT=350
+EDIFF=1E-5
+IBRION=2
+POTIM=0.25
+NSW=0
+EDIFFG=-1E-2
+ISMEAR=0
+SIGMA=0.05
+PREC=ACCURATE
+ISIF=2
+NPAR=4
+#LWAVE=FALSE
+#LCHARG=FALSE
+LREAL=Auto
+#IALGO=48
+ISYM=0
+LHFCALC=.TRUE.
+HFSCREEN=0.2
+#ALGO=Damped
+#TIME=0.4
+</code></pre><h2 id="4-hseband">4. Hseband</h2>
+<pre><code>cp -rf 2hse-scf hseband
+</code></pre><h3 id="incar-3">INCAR</h3>
+<pre><code>SYSTEM=x
+ISTART=1
+ICHARG=11
+LORBIT=10
+ENCUT=350
+EDIFF=1E-5
+IBRION=2
+POTIM=0.25
+NSW=0
+EDIFFG=-1E-2
+ISMEAR=0
+SIGMA=0.05
+PREC=ACCURATE
+ISIF=2
+NPAR=4
+LWAVE=FALSE
+#LCHARG=FALSE
+LREAL=Auto
+#IALGO=48
+ISYM=0
+LHFCALC=.TRUE.
+HFSCREEN=0.2
+#ALGO=Damped
+#TIME=0.4
+</code></pre><h3 id="kpoints-1">KPOINTS</h3>
+<ol>
+<li>Use script <code>gk.x</code> and file <code>syml</code> to output file <code>inp.kpt</code>. If the file has a few lines of zero, then delete.</li>
+<li>Add the contents of <code>inp.kpt</code> at the end of the <strong>IBZKPT</strong> file, set the weights of these added k-points to 0.</li>
+<li>Set the number of k-points correctly. For this example, the number is 1 + rows of file <code>ink.kpt</code>.</li>
+<li>Copy the <strong>IBZKPT</strong> file to <strong>KPOINTS</strong>.</li>
+</ol>
+<pre><code>Automatically generated mesh
+       81
+Reciprocal lattice
+    0.00000000000000    0.00000000000000    0.00000000000000             1
+  0.000000  0.000000  0.000000  0
+  0.025000  0.000000  0.000000  0
+  0.050000  0.000000  0.000000  0
+  0.075000  0.000000  0.000000  0
+  0.100000  0.000000  0.000000  0
+  0.125000  0.000000  0.000000  0
+  ...       ...       ...
+</code></pre><p>Submit the job, then the EIGENVAL file will generate after the calculation. <strong>Modify the contents of the EIGENVAL:</strong> Remove high symmetry points whose weights are not zero and set the number of k-points correctly.</p>
+<pre><code>  120  120    1    1
+  0.4622031E+02  0.1284000E-08  0.1040630E-08  0.4151000E-08  0.2500000E-15
+  1.000000000000000E-004
+  CAR
+ GeS@SnS
+    600     80    364
+
+  0.0000000E+00  0.0000000E+00  0.0000000E+00  0.0000000E+00
+    1      -15.982521
+    2      -15.834306
+    3      -15.615449
+    4      -15.458326
+    5      -15.457173
+    6      -15.366968
+    .      ....
+</code></pre><p>Use script <code>pbnf.x</code> to output file <code>bnd.dat</code> and <code>highk.dat</code>. Import the data into origin and plot band structure.</p>
+<p><strong>NOTE:</strong> There is a problem. In the step Hseband, the <strong>ICHARG</strong> parameter in the INCAR file needs to be set to 11 or 2? This needs to be tested.<br>
+Related discussion: <a href="http://muchong.com/t-3723568-1">http://muchong.com/t-3723568-1</a> <a href="http://muchong.com/t-4232787-1">http://muchong.com/t-4232787-1</a></p>
+<h2 id="reference"><strong>Reference</strong></h2>
+<p>[1] VASP能带计算与绘图</p>
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/post/2017/06/15/unix/linux-%E5%8F%8A-vi-%E7%BC%96%E8%BE%91%E5%99%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%E5%8F%82%E8%80%83/">Unix/Linux 及 vi 编辑器基本命令参考</a></span>
+  <span class="nav-next"><a href="/post/2017/09/01/the-calculation-of-carrier-mobility-for-2d-materials/">The Calculation of Carrier Mobility for 2D Materials</a> &rarr;</span>
+</nav>
+
+
+
+
+
+<script src="//yihui.org/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.org/js/center-img.js"></script>
+
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  
+  <hr>
+  <div class="copyright">© <a href="https://chempeng.github.io/">chempeng</a> 2020 | <a href="https://www.zhihu.com/people/chempeng">Zhihu</a> | <a href="https://weibo.com/u/3043897063">Weibo</a></div>
+  
+  </footer>
+  </article>
+  
+  </body>
+</html>
+

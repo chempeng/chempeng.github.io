@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>VASP 固定基矢优化结构 - chempeng</title>
+    <meta property="og:title" content="VASP 固定基矢优化结构 - chempeng">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="一般对于三维材料的结构晶格参数优化有两种方法（教程参见 Learn VASP The Hard Way）：
+[&amp;hellip;] 而上述方法对于优化表面，二维或者一维体系不适用，优化此类材料时，必须固定一个或两个晶胞方向不优化。一般可通过晶格参数扫描再拟合函数实现，引侯柱峰老师对该类问题解答回帖。
+[&amp;hellip;] 如果二维参数里有一个参数（也就是a,b相等）,那通过固定 c，改 a 或 b  &amp;hellip;">
+      <meta property="og:description" content="一般对于三维材料的结构晶格参数优化有两种方法（教程参见 Learn VASP The Hard Way）：
+[&amp;hellip;] 而上述方法对于优化表面，二维或者一维体系不适用，优化此类材料时，必须固定一个或两个晶胞方向不优化。一般可通过晶格参数扫描再拟合函数实现，引侯柱峰老师对该类问题解答回帖。
+[&amp;hellip;] 如果二维参数里有一个参数（也就是a,b相等）,那通过固定 c，改 a 或 b  &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">chempeng</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/">Home</a></li>
+  
+  <li><a href="/about/">About</a></li>
+  
+  <li><a href="/categories/">Categories</a></li>
+  
+  <li><a href="/tags/">Tags</a></li>
+  
+  <li><a href="/index.xml">Subscribe</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>VASP 固定基矢优化结构</h1>
+
+<h3>无缺
+  /  2018-03-19</h3>
+<hr>
+
+
+      </header>
+
+
+
+<p>一般对于三维材料的结构晶格参数优化有两种方法（教程参见 Learn VASP The Hard Way）：</p>
+<ol>
+<li><a href="http://www.bigbrosci.com/newsitem/278011633">Birch-Murnaghan 状态方程拟合</a></li>
+<li><a href="http://www.bigbrosci.com/newsitem/278019758">VASP 计算中调节 ISIF 参数</a></li>
+</ol>
+<p>而上述方法对于优化表面，二维或者一维体系不适用，优化此类材料时，必须固定一个或两个晶胞方向不优化。一般可通过晶格参数扫描再拟合函数实现，引侯柱峰老师对该类问题解答回帖。</p>
+<blockquote>
+<p>如果二维参数里有一个参数（也就是a,b相等）,那通过固定 c，改 a 或 b 的值，对每一个 a 值下的结构进行 ISIF=2 的计算，得到总能，然后根据一系列的 总能-晶格常数 a 的值进行一元二次函数的拟合，得到最小值的位置。
+如果是含两个常数（即 a,b 不等），通过地，固定 c，改变a和b地值，对每一组 a 和 b 值下的结构进行 ISIF=2 的计算，得到总能，然后根据一系列的 总能-晶格常数 a 和 b 的值，进行二元二次函数的拟合得到最小值的位置。</p>
+</blockquote>
+<p>这样的方法普适性很高，但却是繁琐。于是有了在特定条件下，重新编译 vasp 使得该优化简化的方法，<strong>即当材料为正交晶系或单斜晶系时，可通过修改 <code>constr_cell_relax.F</code> 编译软件实现固定基矢进行结构优化。</strong></p>
+<p>对于 VASP 5.4.1 之后的版本，软件的编译已经方便了很多，本文以 intel 编译器 + mkl + impi 编译 VASP 5.4.1 为例进行介绍。VASP 的安装编译无需 root 权限，普通用户在家目录即可安装。</p>
+<h3 id="1-查看编译器mkl-等安装及环境变量设置正确">1. 查看编译器，mkl 等安装及环境变量设置正确</h3>
+<pre><code>export LD_LIBRARY_PATH=/share/intel/composer_xe_2015.6.233/mkl/lib/intel64/:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/share/intel/composer_xe_2015.6.233/compiler/lib/intel64:$LD_LIBRARY_PATH
+export PATH=/share/intel/composer_xe_2015.6.233/bin/intel64:$PATH
+export PATH=/share/intel/impi/5.0.3.049/intel64/bin:$PATH
+</code></pre><h3 id="2-修改-constr_cell_relaxf">2. 修改 constr_cell_relax.F</h3>
+<p>以固定 c 方向为例，<code>constr_cell_relax.F</code> （src 目录下）修改后如下</p>
+<pre><code>!-----------------------------------------------------------------------
+!
+! At present, VASP does not allow to relax the cellshape selectively
+! i.e. for instance only cell relaxation in x direction.
+! To be more precisse, this behaviour can not be achived via the INCAR
+! or POSCAR file.
+! However, it is possible to set selected components of the stress tensor
+! to zero.
+! The most conveninent position to do this is the routines
+! CONSTR_CELL_RELAX  (constraint cell relaxation).
+! FCELL contains the forces on the basis vectors.
+! These forces are used to modify the basis vectors according
+! to the following equations:
+!
+!      A_OLD(1:3,1:3)=A(1:3,1:3) ! F90 style
+!      DO J=1,3
+!      DO I=1,3
+!      DO K=1,3
+!        A(I,J)=A(I,J) + FCELL(I,K)*A_OLD(K,J)*STEP_SIZE
+!      ENDDO
+!      ENDDO
+!      ENDDO
+! where A holds the basis vectors (in cartesian coordinates).
+!
+!-----------------------------------------------------------------------
+
+      SUBROUTINE CONSTR_CELL_RELAX(FCELL)
+      USE prec
+      REAL(q) FCELL(3,3)
+      DO I=1,3
+        FCELL(3,I)=0
+        FCELL(I,3)=0
+      ENDDO
+!     just one simple example
+!     relaxation in x directions only
+!      SAVE=FCELL(1,1)
+!      FCELL=0   ! F90 style: set the whole array to zero
+!      FCELL(1,1)=SAVE
+!     relaxation in z direction only
+!      SAVE=FCELL(3,3)
+!      FCELL=0   ! F90 style: set the whole array to zero
+!      FCELL(3,3)=SAVE
+
+      RETURN
+      END SUBROUTINE
+</code></pre><p>对于其他方向晶格基矢的修改同理：对于a方向基矢，将 FCELL(3,I) 和 FCELL(I,3) 分别改为 FCELL(1,I) 和 FCELL(I,1) ；对于b方向基矢，则分别改为 FCELL(2,I) 和 FCELL(I,2) ；固定两个基矢则应该同时将两个方向对应的矩阵元设置为0。或参考 <a href="http://muchong.com/t-3427823-1">VASP并行可执行软件包，可对晶胞参数进行部分优化</a> 可实现添加参数文件实现不同基矢方向固定。（未做测试）</p>
+<h3 id="3-编译">3. 编译</h3>
+<p>建议重新解压源码编译软件</p>
+<pre><code>[yourname@localhost ~]$ tar -zxvf vasp.5.4.1.05Feb16.tar.gz
+[yourname@localhost ~]$ tar -zxvf vasp.5.lib_.tar_2.gz
+[yourname@localhost ~]$ cd vasp.5.4.1
+[yourname@localhost ~]$ cp arch/makefile.include.linux_intel makefile.include
+[yourname@localhost ~]$ make std
+</code></pre><p>普通用户在家目录安装编译前在 <code>makefile.include</code> 文件中添加 <code>$MKLROOT</code>，位置如下</p>
+<pre><code>MKLROOT    =/share/intel/composer_xe_2015.6.233/mkl
+MKL_PATH   = $(MKLROOT)/lib/intel64
+</code></pre><p>编译结束后，进入 <code>bin</code> 目录，可将 <code>vasp_std</code> 重命名为 <code>vasp_fixZ</code> ，将软件移入系统 <code>bin</code> 目录下或将该目录添加至环境变量。</p>
+<pre><code>[yourname@localhost ~]$ echo 'export PATH=/home/yourname/vasp.5.4.1/bin:$PATH' &gt;&gt; ~/.bashrc
+[yourname@localhost ~]$ source ~/.bashrc
+</code></pre><p>完成编译后，在 INCAR 文件中设置 ISIF=3，便可实现固定 Z 轴的结构优化。</p>
+<p>参考资料</p>
+<ol>
+<li><a href="http://muchong.com/html/201508/9268257.html">vasp里如何固定ab轴 只优化c轴？</a></li>
+<li><a href="http://muchong.com/html/201108/3427823.html">VASP并行可执行软件包，可对晶胞参数进行部分优化</a></li>
+<li><a href="https://github.com/henniggroup/GASP-python/blob/master/docs/usage.md">GASP-python</a></li>
+<li><a href="http://hmli.ustc.edu.cn/doc/app/vasp.5.4.1-vtst.htm">VASP 5.4.1+VTST编译安装</a></li>
+<li><a href="http://wiki.tangzeyuan.com/software/vasp-compilation.html">VASP Compilation</a></li>
+</ol>
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/post/2018/03/06/castep-%E4%B8%8E-vasp-phonopy-%E5%A3%B0%E5%AD%90%E8%B0%B1%E8%AE%A1%E7%AE%97/">Castep 与 vasp&#43;phonopy 声子谱计算</a></span>
+  <span class="nav-next"><a href="/post/2018/08/08/hello-fish-shell/">Hello fish shell</a> &rarr;</span>
+</nav>
+
+
+
+
+
+<script src="//yihui.org/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.org/js/center-img.js"></script>
+
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  
+  <hr>
+  <div class="copyright">© <a href="https://chempeng.github.io/">chempeng</a> 2020 | <a href="https://www.zhihu.com/people/chempeng">Zhihu</a> | <a href="https://weibo.com/u/3043897063">Weibo</a></div>
+  
+  </footer>
+  </article>
+  
+  </body>
+</html>
+

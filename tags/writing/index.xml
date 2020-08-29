@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Writing on chempeng</title>
+    <link>/tags/writing/</link>
+    <description>Recent content in Writing on chempeng</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 28 Feb 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/writing/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>科技论文写作</title>
+      <link>/post/2017/02/28/%E7%A7%91%E6%8A%80%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/</link>
+      <pubDate>Tue, 28 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/02/28/%E7%A7%91%E6%8A%80%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/</guid>
+      <description>一 标题 Title NOTES  标题需要简单，有效，准确的体现文章的内容。 使用适合所投期刊类别 (scope) 的词语。 避免使用描述性词语 (Descriptive words)，如 Study, Investigation, or Demonstration，因为它们会降低文章的独特性。 避免使用过度或不必要的形容词，如 Significant Enhancement, Highly Efficient, Novel, Facile, or Green,。 避免在标题中插入一系列的关键词，关键词选取利于文献检索即可，过多则影响文章吸引力。  二 摘要 Abstract  An abstract should be written in such a way that any reader who is not familiar with the topic will be able to understand and appreciate the main points of the study.
+  简单介绍该研究的背景现况。 总结研究所使用方法及关键性结果。 表明研究的重要性，如该研究在更广泛背景下的意义或可能的应用。  NOTES  不要在摘要中引用文献及文中图表。 缩写和首字母缩略词应在首次使用时加以定义。  Examples of Abstracts 三 引言 Introduction  A good introduction requires that the authors fully understand the significance of their work and how it fits in with the current knowledge in a specific area.</description>
+    </item>
+    
+  </channel>
+</rss>

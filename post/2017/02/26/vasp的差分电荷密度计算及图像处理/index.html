@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>VASP的差分电荷密度计算及图像处理 - chempeng</title>
+    <meta property="og:title" content="VASP的差分电荷密度计算及图像处理 - chempeng">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="使用的软件：VASP, VESTA, SshClient
+[&amp;hellip;] Charge density difference of system AB: ∆ρ = ρAB − ρA − ρB
+[&amp;hellip;] NOTE:
+[&amp;hellip;] 结构优化后的自洽计算
+mkdir AB mkdir A mkdir B INCAR file SYSTEM=X ISTART=0 &amp;hellip;">
+      <meta property="og:description" content="使用的软件：VASP, VESTA, SshClient
+[&amp;hellip;] Charge density difference of system AB: ∆ρ = ρAB − ρA − ρB
+[&amp;hellip;] NOTE:
+[&amp;hellip;] 结构优化后的自洽计算
+mkdir AB mkdir A mkdir B INCAR file SYSTEM=X ISTART=0 &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">chempeng</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/">Home</a></li>
+  
+  <li><a href="/about/">About</a></li>
+  
+  <li><a href="/categories/">Categories</a></li>
+  
+  <li><a href="/tags/">Tags</a></li>
+  
+  <li><a href="/index.xml">Subscribe</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>VASP的差分电荷密度计算及图像处理</h1>
+
+<h3>chempeng
+  /  2017-02-26</h3>
+<hr>
+
+
+      </header>
+
+
+
+<blockquote>
+<p>使用的软件：VASP, VESTA, SshClient</p>
+</blockquote>
+<h1 id="definition">Definition</h1>
+<ul>
+<li>差分电荷密度 (deformation charge density) : 成键后的电荷密度与对应的点的原子电荷密度之差。通过差分电荷密度的计算和分析，可以清楚地得到在成键和成键电子耦合过程中的电荷移动以及成键极化方向等性质。</li>
+<li>二次差分电荷密度 （difference charge density） ：指同一个体系化学成分或者几何构型改变之后电荷的重新分布。</li>
+</ul>
+<h1 id="一-差分电荷密度计算">一 差分电荷密度计算</h1>
+<p>Charge density difference of system AB: <strong>∆ρ = ρAB − ρA − ρB</strong></p>
+<blockquote>
+<p>NOTE:</p>
+</blockquote>
+<ol>
+<li>AB, A, B 需放在相同大小的空间格子。</li>
+<li>In calculation of the latter two quantities, the atomic positions are fixed as those they have in the AB system.</li>
+<li>Some NGX NGY NGZ</li>
+</ol>
+<p><strong>结构优化后</strong>的自洽计算</p>
+<pre><code>mkdir AB
+mkdir A
+mkdir B
+</code></pre><h2 id="incar-file">INCAR file</h2>
+<pre><code>SYSTEM=X
+ISTART=0
+ENCUT=350
+EDIFF=1E-5
+IBRION=-1 
+POTIM=0.25
+NSW=0 # Only electronic-SC loops are performed
+EDIFFG=-1E-2
+ISMEAR=0
+SIGMA=0.05
+PREC=ACCURATE
+ISIF=2
+NPAR=4
+#LWAVE=FALSE
+#LCHARG=FALSE # CHGCAR is written
+LREAL=Auto
+#IALGO=48
+ISYM=0
+NGX=x # 增加
+NGY=y # 增加
+NGZ=z # 增加
+</code></pre><ul>
+<li>NGX NGY NGZ 的获取：在结构优化的 OUTCAR 文件中搜索，设置环境变量后输入<code>ngx</code>获得</li>
+</ul>
+<pre><code>vi ~/.bashrc
+alias ngx=&quot;grep -A3 'NGX' OUTCAR&quot;
+source ~/.bashrc
+</code></pre><h2 id="poscar-file">POSCAR file</h2>
+<pre><code>cp opt/CONTCAR POSCAR
+</code></pre><p>A, B 各自保留优化后的 POSCAR 部分，编辑删除 POSCAR 文件</p>
+<pre><code>vi POSCAR
+:set nu # 获取编辑行数
+:x,y d # 删除 x 行至 y 行
+:wq
+</code></pre><p>POTCAR 与 POSCAR 信息相符即可，KPOINTS 与自洽计算时相同，提交作业，计算完成后，获得三个 CHGCAR 文件，使用 SshClient 导出。</p>
+<h1 id="二-图像处理">二 图像处理</h1>
+<ol>
+<li>使用软件 VESTA 打开 AB 的 CHGCAR</li>
+<li>Edit - Edit Data - Volumetric Data - Import (A CHGCAR) - Select Substract from current data - OK</li>
+<li>Edit - Edit Data - Volumetric Data - Import (B CHGCAR) - Select Substract from current data - OK</li>
+<li>Edit - Bonds - New - search molecules 和 Do not search atoms… - Max.length=3 - OK</li>
+<li>取消勾选 Volumetic date 下的 Show sections</li>
+<li>Click Properties… to modify the isosurface</li>
+<li>Select the format whatever you like and save.</li>
+</ol>
+
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/post/2017/01/06/vasp%E7%9A%84%E7%94%B5%E8%8D%B7%E5%AF%86%E5%BA%A6%E8%AE%A1%E7%AE%97%E5%8F%8A%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">VASP的电荷密度计算及图像处理</a></span>
+  <span class="nav-next"><a href="/post/2017/02/28/%E7%A7%91%E6%8A%80%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/">科技论文写作</a> &rarr;</span>
+</nav>
+
+
+
+
+
+<script src="//yihui.org/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.org/js/center-img.js"></script>
+
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  
+  <hr>
+  <div class="copyright">© <a href="https://chempeng.github.io/">chempeng</a> 2020 | <a href="https://www.zhihu.com/people/chempeng">Zhihu</a> | <a href="https://weibo.com/u/3043897063">Weibo</a></div>
+  
+  </footer>
+  </article>
+  
+  </body>
+</html>
+

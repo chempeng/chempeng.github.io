@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Unix/Linux 及 vi 编辑器基本命令参考 - chempeng</title>
+    <meta property="og:title" content="Unix/Linux 及 vi 编辑器基本命令参考 - chempeng">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="Starting a Terminal. Continually updated&amp;hellip;
+[&amp;hellip;] chmod octal file – 更改 file 的权限
+[&amp;hellip;] 示例:
+chmod 777 – 为所有用户添加读、写、执行权限
+chmod 755 – 为所有者添加 rwx 权限, 为组和其他用户添加rx 权限
+更多选项参阅 man chmod &amp;hellip;">
+      <meta property="og:description" content="Starting a Terminal. Continually updated&amp;hellip;
+[&amp;hellip;] chmod octal file – 更改 file 的权限
+[&amp;hellip;] 示例:
+chmod 777 – 为所有用户添加读、写、执行权限
+chmod 755 – 为所有者添加 rwx 权限, 为组和其他用户添加rx 权限
+更多选项参阅 man chmod &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">chempeng</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/">Home</a></li>
+  
+  <li><a href="/about/">About</a></li>
+  
+  <li><a href="/categories/">Categories</a></li>
+  
+  <li><a href="/tags/">Tags</a></li>
+  
+  <li><a href="/index.xml">Subscribe</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Unix/Linux 及 vi 编辑器基本命令参考</h1>
+
+<h3>chempeng
+  /  2017-06-15</h3>
+<hr>
+
+
+      </header>
+
+
+
+<p>Starting a Terminal. Continually updated&hellip;</p>
+<h1 id="文件命令">文件命令</h1>
+<table>
+<thead>
+<tr>
+<th><strong>文件命 令</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ls</strong> – 列出目录</td>
+</tr>
+<tr>
+<td><strong>ls -al</strong> – 使用格式化列出隐藏文件</td>
+</tr>
+<tr>
+<td><strong>cd dir</strong> - 更改目录到 dir</td>
+</tr>
+<tr>
+<td><strong>cd</strong> – 更改到 home 目录</td>
+</tr>
+<tr>
+<td><strong>pwd</strong> – 显示当前目录</td>
+</tr>
+<tr>
+<td><strong>mkdir dir</strong> – 创建目录 dir</td>
+</tr>
+<tr>
+<td><strong>rm file</strong> – 删除 file</td>
+</tr>
+<tr>
+<td><strong>rm -r dir</strong> – 删除目录 dir</td>
+</tr>
+<tr>
+<td><strong>rm -f file</strong> – 强制删除 file</td>
+</tr>
+<tr>
+<td><strong>rm -rf dir</strong> – 强制删除目录 dir *</td>
+</tr>
+<tr>
+<td><strong>cp file1 file2</strong> – 将 file1 复制到 file2</td>
+</tr>
+<tr>
+<td><strong>cp -r dir1 dir2</strong> – 将 dir1 复制到 dir2; 如果 dir2 不存在则创建它</td>
+</tr>
+<tr>
+<td><strong>mv file1 file2</strong> – 将 file1 重命名或移动到 file2; 如果file2 是一个存在的目录则将 file1 移动到目录 file2 中</td>
+</tr>
+<tr>
+<td><strong>ln -s file link</strong> – 创建 file 的符号连接 link</td>
+</tr>
+<tr>
+<td><strong>touch file</strong> – 创建 file</td>
+</tr>
+<tr>
+<td><strong>cat &gt; file</strong> – 将标准输入添加到 file</td>
+</tr>
+<tr>
+<td><strong>more file</strong> – 查看 file 的内容</td>
+</tr>
+<tr>
+<td><strong>head file</strong> – 查看 file 的前 10 行</td>
+</tr>
+<tr>
+<td><strong>tail file</strong> – 查看 file 的后 10 行</td>
+</tr>
+<tr>
+<td><strong>tail -f file</strong> – 从后 10 行开始查看 file 的内容</td>
+</tr>
+</tbody>
+</table>
+<h1 id="进程管理">进程管理</h1>
+<table>
+<thead>
+<tr>
+<th>进程管理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ps</strong> – 显示当前的活动进程</td>
+</tr>
+<tr>
+<td><strong>top</strong> – 显示所有正在运行的进程</td>
+</tr>
+<tr>
+<td><strong>kill pid</strong> – 杀掉进程 id pid</td>
+</tr>
+<tr>
+<td><strong>killall proc</strong> – 杀掉所有名为 proc 的进程 *</td>
+</tr>
+<tr>
+<td><strong>bg</strong> – 列出已停止或后台的作业</td>
+</tr>
+<tr>
+<td><strong>fg</strong> – 将最近的作业带到前台</td>
+</tr>
+<tr>
+<td><strong>fg n</strong> – 将作业 n 带到前台</td>
+</tr>
+</tbody>
+</table>
+<h1 id="文件权限">文件权限</h1>
+<p><strong>chmod octal file</strong> – 更改 file 的权限</p>
+<ul>
+<li>4 – 读 (r)</li>
+<li>2 – 写 (w)</li>
+<li>1 – 执行 (x)</li>
+</ul>
+<p>示例:</p>
+<p><strong>chmod 777</strong> – 为所有用户添加读、写、执行权限</p>
+<p><strong>chmod 755</strong> – 为所有者添加 rwx 权限, 为组和其他用户添加rx 权限</p>
+<p>更多选项参阅 <strong>man chmod</strong></p>
+<h1 id="ssh">SSH</h1>
+<table>
+<thead>
+<tr>
+<th>SSH</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ssh user@host</strong> – 以 user 用户身份连接到 host</td>
+</tr>
+<tr>
+<td><strong>ssh -p port user@host</strong> – 在端口 port 以 user 用户身份连接到 host</td>
+</tr>
+<tr>
+<td><strong>ssh-copy-id user@host</strong> – 将密钥添加到 host 以实现无密码登录</td>
+</tr>
+</tbody>
+</table>
+<h1 id="搜索">搜索</h1>
+<table>
+<thead>
+<tr>
+<th>搜索</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>grep pattern files</strong> – 搜索 files 中匹配 pattern 的内容</td>
+</tr>
+<tr>
+<td><strong>grep -r pattern dir</strong> – 递归搜索 dir 中匹配 pattern 的内容</td>
+</tr>
+<tr>
+<td><strong>command I grep pattern</strong> – 搜索 command 输出中匹配pattern 的内容</td>
+</tr>
+</tbody>
+</table>
+<h1 id="系统信息">系统信息</h1>
+<table>
+<thead>
+<tr>
+<th>系统信息</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>date</strong> – 显示当前日期和时间</td>
+</tr>
+<tr>
+<td><strong>cal</strong> – 显示当月的日历</td>
+</tr>
+<tr>
+<td><strong>uptime</strong> – 显示系统从开机到现在所运行的时间</td>
+</tr>
+<tr>
+<td><strong>w</strong> – 显示登录的用户</td>
+</tr>
+<tr>
+<td><strong>whoami</strong> – 查看你的当前用户名</td>
+</tr>
+<tr>
+<td><strong>finger user</strong> – 显示 user 的相关信息</td>
+</tr>
+<tr>
+<td><strong>uname -a</strong> – 显示内核信息</td>
+</tr>
+<tr>
+<td><strong>cat /proc/cpuinfo</strong> – 查看 cpu 信息</td>
+</tr>
+<tr>
+<td><strong>cat /proc/meminfo</strong> – 查看内存信息</td>
+</tr>
+<tr>
+<td><strong>man command</strong> – 显示 command 的说明手册</td>
+</tr>
+<tr>
+<td><strong>df</strong> – 显示磁盘占用情况，- h 易读</td>
+</tr>
+<tr>
+<td><strong>du</strong> – 显示目录空间占用情况</td>
+</tr>
+<tr>
+<td><strong>free</strong> – 显示内存及交换区占用情况</td>
+</tr>
+</tbody>
+</table>
+<h1 id="压缩解压">压缩解压</h1>
+<table>
+<thead>
+<tr>
+<th>压缩解压</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>tar cf file.tar files</strong> – 创建包含 files 的 tar 文件</td>
+</tr>
+<tr>
+<td><strong>tar xf file.tar</strong> – 从 file.tar 提取文件</td>
+</tr>
+<tr>
+<td><strong>tar czf file.tar.gz files</strong> – 使用 Gzip 压缩创建 tar 文件</td>
+</tr>
+<tr>
+<td><strong>tar xzf file.tar.gz</strong> – 使用 Gzip 提取 tar 文件</td>
+</tr>
+<tr>
+<td><strong>tar cjf file.tar.bz2</strong> – 使用 Bzip2 压缩创建 tar 文件</td>
+</tr>
+<tr>
+<td><strong>tar xjf file.tar.bz2</strong> – 使用 Bzip2 提取 tar 文件</td>
+</tr>
+<tr>
+<td><strong>gzip file</strong> – 压缩 file 并重命名为 file.gz</td>
+</tr>
+<tr>
+<td><strong>gzip -d file.gz</strong> – 将 file.gz 解压缩为 file</td>
+</tr>
+<tr>
+<td><strong>tar cvf file.tar file</strong> – 把目录 file 的所有文件等打包成一个 file.tar 文件</td>
+</tr>
+<tr>
+<td><strong>tar xvf file.tar file</strong> – 把打包成的文件 file.tar 展成 file 目录</td>
+</tr>
+</tbody>
+</table>
+<h1 id="网络">网络</h1>
+<table>
+<thead>
+<tr>
+<th>网络</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ping host</strong> – ping host 并输出结果</td>
+</tr>
+<tr>
+<td><strong>whois domain</strong> – 获取 domain 的 whois 信息</td>
+</tr>
+<tr>
+<td><strong>dig domain</strong> – 获取 domain 的 DNS 信息</td>
+</tr>
+<tr>
+<td><strong>dig -x host</strong> – 逆向查询 host</td>
+</tr>
+<tr>
+<td><strong>wget file</strong> – 下载 file</td>
+</tr>
+<tr>
+<td><strong>wget -c file</strong> – 断点续传</td>
+</tr>
+</tbody>
+</table>
+<h1 id="安装">安装</h1>
+<table>
+<thead>
+<tr>
+<th>安装</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>从源代码安装: <strong>./configure</strong> -&gt; <strong>make</strong> -&gt; <strong>make install</strong></td>
+</tr>
+<tr>
+<td><strong>dpkg -i pkg.deb</strong> – 安装包 (Debian)</td>
+</tr>
+<tr>
+<td><strong>rpm -Uvh pkg.rpm</strong> – 安装包 (RPM)</td>
+</tr>
+</tbody>
+</table>
+<h1 id="快捷键">快捷键</h1>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ctrl+C</strong> – 停止当前命令</td>
+</tr>
+<tr>
+<td><strong>Ctrl+Z</strong> – 停止当前命令，并使用 fg 恢复</td>
+</tr>
+<tr>
+<td><strong>Ctrl+D</strong> – 注销当前会话，与 exit 相似</td>
+</tr>
+<tr>
+<td><strong>Ctrl+W</strong> – 删除当前行中的字</td>
+</tr>
+<tr>
+<td><strong>Ctrl+U</strong> – 删除整行</td>
+</tr>
+<tr>
+<td><strong>!!</strong> - 重复上次的命令</td>
+</tr>
+<tr>
+<td><strong>exit</strong> – 注销当前会话</td>
+</tr>
+</tbody>
+</table>
+<h1 id="vi-编辑器的使用">vi 编辑器的使用</h1>
+<table>
+<thead>
+<tr>
+<th>基本使用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>vi aaa</strong> – 将编辑文件 aaa, 如果原来不存在,将产生空的新文件</td>
+</tr>
+<tr>
+<td><strong>i</strong> – 进入文本插入状态</td>
+</tr>
+<tr>
+<td><strong>a</strong> – 进入文本插入状态, 但从光标后开始插入</td>
+</tr>
+<tr>
+<td><strong>ESC</strong> – 结束插入或 replace 状态，进入命令状态</td>
+</tr>
+<tr>
+<td><strong>R</strong> – 进入 replace 状态，直到按 ESC 为止</td>
+</tr>
+<tr>
+<td><strong>:wq</strong> – 退出 vi 编辑器, 并且存起改动的内容</td>
+</tr>
+<tr>
+<td><strong>:q!</strong> – 强行退出 vi 编辑器, 并且放弃所有的改动</td>
+</tr>
+</tbody>
+</table>
+<h2 id="vi-处在命令状态下">vi 处在命令状态下</h2>
+<table>
+<thead>
+<tr>
+<th>1G – 光标移到文件的第一行</th>
+<th>x – 删除一个字符(从光标处)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>G</strong> – 光标移到文件的最后一行</td>
+<td><strong>5x</strong> – 删除 5 个字符</td>
+</tr>
+<tr>
+<td><strong>0</strong> – 光标移到一行的最前头</td>
+<td><strong>r</strong> – replace 状态，可进行当前字符的替代</td>
+</tr>
+<tr>
+<td><strong><code>$</code></strong> – 光标移到一行的最后头</td>
+<td><strong>:set nu</strong> – 给文件注上行号</td>
+</tr>
+<tr>
+<td><strong>100G</strong> – 光标移到第 100 行</td>
+<td><strong>:/ABC</strong> – 寻找字符 ABC，从光标所在行开始</td>
+</tr>
+<tr>
+<td><strong>dd</strong> – 删除当前行</td>
+<td><strong>n</strong> – 紧接上一行命令，寻找下一个字符 ABC</td>
+</tr>
+<tr>
+<td><strong>5dd</strong> – 删除 5 行，从光标所在行开始</td>
+<td><strong>N</strong> – 寻找上一个字符 ABC</td>
+</tr>
+<tr>
+<td><strong>D</strong> – 从光标所在位置开始，删除该行中后面的字符</td>
+<td><strong>:1,80s/OLD/NEW/g</strong> – 在第 1 到第 80 行间，将所有的字符 OLD 用字符 NEW 替代</td>
+</tr>
+<tr>
+<td><strong>dG</strong> – 从光标所在行开始，删除之后的所有内容</td>
+<td><strong>:1,$s/old/new/g</strong> – 同上，但一直到文件尾端</td>
+</tr>
+<tr>
+<td><strong>yy</strong> – 拷贝当前行</td>
+<td><strong>:g/abcd/p</strong> – 显示文件中所有的字符 abcd</td>
+</tr>
+<tr>
+<td><strong>5yy</strong> – 拷贝 5 行，从光标所在行起</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>p</strong> – 粘帖(paste) dd 或 yy 或 D 或 dG 的内容，从光标所在位置开始粘帖</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>主要内容源于: <a href="http://LinuxTOY.org">http://LinuxTOY.org</a><br>
+打印版下载：<a href="http://pan.baidu.com/s/1mieEmEG">Unix/Linux 命令参考</a> or <a href="http://pan.baidu.com/s/1cpNSQi">Unix/Linux 及 vi 编辑器基本命令参考</a></p>
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/post/2017/05/21/the-installation-of-sci-hub-plugin/">The Installation of Sci-hub Plugin</a></span>
+  <span class="nav-next"><a href="/post/2017/06/24/hse-functional-for-band-structures-in-vasp/">HSE Functional for Band Structures in VASP</a> &rarr;</span>
+</nav>
+
+
+
+
+
+<script src="//yihui.org/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.org/js/center-img.js"></script>
+
+  
+
+  
+  <hr>
+  <div class="copyright">© <a href="https://chempeng.github.io/">chempeng</a> 2020 | <a href="https://www.zhihu.com/people/chempeng">Zhihu</a> | <a href="https://weibo.com/u/3043897063">Weibo</a></div>
+  
+  </footer>
+  </article>
+  
+  </body>
+</html>
+

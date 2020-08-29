@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chemistry on chempeng</title>
+    <link>/categories/chemistry/</link>
+    <description>Recent content in Chemistry on chempeng</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 19 Mar 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/chemistry/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>VASP 固定基矢优化结构</title>
+      <link>/post/2018/03/19/vasp-%E5%9B%BA%E5%AE%9A%E5%9F%BA%E7%9F%A2%E4%BC%98%E5%8C%96%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Mon, 19 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/03/19/vasp-%E5%9B%BA%E5%AE%9A%E5%9F%BA%E7%9F%A2%E4%BC%98%E5%8C%96%E7%BB%93%E6%9E%84/</guid>
+      <description>&lt;p&gt;一般对于三维材料的结构晶格参数优化有两种方法（教程参见 Learn VASP The Hard Way）：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.bigbrosci.com/newsitem/278011633&#34;&gt;Birch-Murnaghan 状态方程拟合&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.bigbrosci.com/newsitem/278019758&#34;&gt;VASP 计算中调节 ISIF 参数&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;而上述方法对于优化表面，二维或者一维体系不适用，优化此类材料时，必须固定一个或两个晶胞方向不优化。一般可通过晶格参数扫描再拟合函数实现，引侯柱峰老师对该类问题解答回帖。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Castep 与 vasp&#43;phonopy 声子谱计算</title>
+      <link>/post/2018/03/06/castep-%E4%B8%8E-vasp-phonopy-%E5%A3%B0%E5%AD%90%E8%B0%B1%E8%AE%A1%E7%AE%97/</link>
+      <pubDate>Tue, 06 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/03/06/castep-%E4%B8%8E-vasp-phonopy-%E5%A3%B0%E5%AD%90%E8%B0%B1%E8%AE%A1%E7%AE%97/</guid>
+      <description>&lt;p&gt;本文分别介绍 Materials Studio 中的 Castep 模块和 vasp+phonopy 使用 Finite difference method 和 DFPT 方法进行声子谱计算。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The plane-average electron difference in VASP</title>
+      <link>/post/2017/11/29/the-plane-average-electron-difference-in-vasp/</link>
+      <pubDate>Wed, 29 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/11/29/the-plane-average-electron-difference-in-vasp/</guid>
+      <description>&lt;p&gt;在&lt;strong&gt;VASP的差分电荷密度计算及图像处理 VASP 的差分电荷密度计算及图像处理&lt;/strong&gt;中介绍了差分电荷密度的计算方法与三维图像处理，在文献中常常能见到二维的差分电荷图与平均到某个方向的差分电荷曲线（如图）。一般二维的差分电荷密度图在 VESTA 中 Utilitie / 2D Data Display 便可以进行处理，本文简单介绍一下平面平均差分电荷 (The plane-average electron difference) 的数据处理方式。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://cdn.jsdelivr.net/gh/chempeng/image/img/2017-11-29.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>VASP - Bader 电荷分析计算</title>
+      <link>/post/2017/10/24/vasp-bader-%E7%94%B5%E8%8D%B7%E5%88%86%E6%9E%90%E8%AE%A1%E7%AE%97/</link>
+      <pubDate>Tue, 24 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/10/24/vasp-bader-%E7%94%B5%E8%8D%B7%E5%88%86%E6%9E%90%E8%AE%A1%E7%AE%97/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;使用的工具： VASP, &lt;a href=&#34;http://pan.baidu.com/s/1gftip1p&#34;&gt;Bader&lt;/a&gt;， &lt;a href=&#34;http://pan.baidu.com/s/1eRV3M8M&#34;&gt;chgsum.pl&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;使用 VASP 进行 Bader 电荷分析，可以得到原子周围的电子数，从而近似得到原子的化合价。本文简单介绍 Bader 程序的安装与使用 VASP 进行 bader 分析的计算过程。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Graphic Instructor 进行量化计算（VASP）与分析</title>
+      <link>/post/2017/09/16/graphic-instructor-%E8%BF%9B%E8%A1%8C%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97vasp%E4%B8%8E%E5%88%86%E6%9E%90/</link>
+      <pubDate>Sat, 16 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/09/16/graphic-instructor-%E8%BF%9B%E8%A1%8C%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97vasp%E4%B8%8E%E5%88%86%E6%9E%90/</guid>
+      <description>&lt;p&gt;All-in-tool of VASP or QE&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The Calculation of Carrier Mobility for 2D Materials</title>
+      <link>/post/2017/09/01/the-calculation-of-carrier-mobility-for-2d-materials/</link>
+      <pubDate>Fri, 01 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/09/01/the-calculation-of-carrier-mobility-for-2d-materials/</guid>
+      <description>&lt;p&gt;The screenshot of ppt&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>HSE Functional for Band Structures in VASP</title>
+      <link>/post/2017/06/24/hse-functional-for-band-structures-in-vasp/</link>
+      <pubDate>Sat, 24 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/06/24/hse-functional-for-band-structures-in-vasp/</guid>
+      <description>&lt;h1 id=&#34;related-reading&#34;&gt;Related Reading&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;VASP the GUIDE: &lt;a href=&#34;http://cms.mpi.univie.ac.at/vasp/vasp/Hartree_Fock_HF_type_hybrid_functional_calculations.html&#34;&gt;Hartree-Fock (HF) type and hybrid functional calculations&lt;/a&gt;&lt;br&gt;
+VASPwiki: &lt;a href=&#34;http://cms.mpi.univie.ac.at/wiki/index.php/Tutorial_on_hybrid_functionals&#34;&gt;Tutorial on hybrid functionals&lt;/a&gt;&lt;br&gt;
+Related discussion: &lt;a href=&#34;https://www.researchgate.net/post/How_can_I_calculate_the_DOS_by_using_HSE06_in_vasp&#34;&gt;How can I calculate the DOS by using HSE06 in vasp?&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>VASP 计算问题小结</title>
+      <link>/post/2017/05/18/vasp-%E8%AE%A1%E7%AE%97%E9%97%AE%E9%A2%98%E5%B0%8F%E7%BB%93/</link>
+      <pubDate>Thu, 18 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/05/18/vasp-%E8%AE%A1%E7%AE%97%E9%97%AE%E9%A2%98%E5%B0%8F%E7%BB%93/</guid>
+      <description>&lt;p&gt;本文转载自博主&lt;a href=&#34;http://blog.sina.com.cn/lipai91&#34;&gt;一个人就是一个叠加态&lt;/a&gt; ，有部分删减修改，文中对相关概念方法做了详细的总结，留坑待填&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>VASP 的 PDOS 计算及 P4vasp 的后处理</title>
+      <link>/post/2017/03/28/vasp-%E7%9A%84-pdos-%E8%AE%A1%E7%AE%97%E5%8F%8A-p4vasp-%E7%9A%84%E5%90%8E%E5%A4%84%E7%90%86/</link>
+      <pubDate>Tue, 28 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/03/28/vasp-%E7%9A%84-pdos-%E8%AE%A1%E7%AE%97%E5%8F%8A-p4vasp-%E7%9A%84%E5%90%8E%E5%A4%84%E7%90%86/</guid>
+      <description>使用的软件：VASP, Origin, SshClient, p4vasp
+  The LDOS, or local density of states, is the the density of state at a particular site of a crystal with some asymetry. For example: A slab will have a different band structure on the surface than in the bulk region. The PDOS is a projected density of states. In the context of VASP this means site-projected DOS, where the information about the different contributions of the different orbitals is computed.</description>
+    </item>
+    
+    <item>
+      <title>VASP 的光学性质计算及 vaspkit 的安装与使用</title>
+      <link>/post/2017/03/17/vasp-%E7%9A%84%E5%85%89%E5%AD%A6%E6%80%A7%E8%B4%A8%E8%AE%A1%E7%AE%97%E5%8F%8A-vaspkit-%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Fri, 17 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/03/17/vasp-%E7%9A%84%E5%85%89%E5%AD%A6%E6%80%A7%E8%B4%A8%E8%AE%A1%E7%AE%97%E5%8F%8A-vaspkit-%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid>
+      <description>使用的软件：VASP, Origin, SshClient, vaspkit
+ 一 光学性质计算 在完成结构优化和静态计算后，拷贝 scf 文件夹为 optic
+cp -rf scf optic 编辑 optic 文件夹下 INCAR
+INCAR SYSTEM=x ISTART=0 ENCUT=350 EDIFF=1E-5 IBRION=-1 # change POTIM=0.25 NSW=0 # change EDIFFG=-1E-2 ISMEAR=0 SIGMA=0.05 PREC=ACCURATE ISIF=2 NPAR=1 # change 4 to 1 #LWAVE=FALSE #LCHARG=FALSE LREAL=Auto #IALGO=48 ISYM=0 NBANDS=x # add LOPTICS=.TRUE. # add  注：NBANDS=x x 为 OUTCAT 中 NBANDS*2, 可使用 grep 命令查询  grep NBANDS OUTCAR 提交作业，计算完成后，可查看 OUTCAR 文件，有计算得出介电常数 (Dielectric constant) 的实部和虚部。</description>
+    </item>
+    
+    <item>
+      <title>科技论文写作</title>
+      <link>/post/2017/02/28/%E7%A7%91%E6%8A%80%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/</link>
+      <pubDate>Tue, 28 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/02/28/%E7%A7%91%E6%8A%80%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/</guid>
+      <description>一 标题 Title NOTES  标题需要简单，有效，准确的体现文章的内容。 使用适合所投期刊类别 (scope) 的词语。 避免使用描述性词语 (Descriptive words)，如 Study, Investigation, or Demonstration，因为它们会降低文章的独特性。 避免使用过度或不必要的形容词，如 Significant Enhancement, Highly Efficient, Novel, Facile, or Green,。 避免在标题中插入一系列的关键词，关键词选取利于文献检索即可，过多则影响文章吸引力。  二 摘要 Abstract  An abstract should be written in such a way that any reader who is not familiar with the topic will be able to understand and appreciate the main points of the study.
+  简单介绍该研究的背景现况。 总结研究所使用方法及关键性结果。 表明研究的重要性，如该研究在更广泛背景下的意义或可能的应用。  NOTES  不要在摘要中引用文献及文中图表。 缩写和首字母缩略词应在首次使用时加以定义。  Examples of Abstracts 三 引言 Introduction  A good introduction requires that the authors fully understand the significance of their work and how it fits in with the current knowledge in a specific area.</description>
+    </item>
+    
+    <item>
+      <title>VASP的差分电荷密度计算及图像处理</title>
+      <link>/post/2017/02/26/vasp%E7%9A%84%E5%B7%AE%E5%88%86%E7%94%B5%E8%8D%B7%E5%AF%86%E5%BA%A6%E8%AE%A1%E7%AE%97%E5%8F%8A%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/</link>
+      <pubDate>Sun, 26 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/02/26/vasp%E7%9A%84%E5%B7%AE%E5%88%86%E7%94%B5%E8%8D%B7%E5%AF%86%E5%BA%A6%E8%AE%A1%E7%AE%97%E5%8F%8A%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/</guid>
+      <description>使用的软件：VASP, VESTA, SshClient
+ Definition  差分电荷密度 (deformation charge density) : 成键后的电荷密度与对应的点的原子电荷密度之差。通过差分电荷密度的计算和分析，可以清楚地得到在成键和成键电子耦合过程中的电荷移动以及成键极化方向等性质。 二次差分电荷密度 （difference charge density） ：指同一个体系化学成分或者几何构型改变之后电荷的重新分布。  一 差分电荷密度计算 Charge density difference of system AB: ∆ρ = ρAB − ρA − ρB
+ NOTE:
+  AB, A, B 需放在相同大小的空间格子。 In calculation of the latter two quantities, the atomic positions are fixed as those they have in the AB system. Some NGX NGY NGZ  结构优化后的自洽计算
+mkdir AB mkdir A mkdir B INCAR file SYSTEM=X ISTART=0 ENCUT=350 EDIFF=1E-5 IBRION=-1 POTIM=0.</description>
+    </item>
+    
+    <item>
+      <title>VASP的电荷密度计算及图像处理</title>
+      <link>/post/2017/01/06/vasp%E7%9A%84%E7%94%B5%E8%8D%B7%E5%AF%86%E5%BA%A6%E8%AE%A1%E7%AE%97%E5%8F%8A%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/</link>
+      <pubDate>Fri, 06 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/01/06/vasp%E7%9A%84%E7%94%B5%E8%8D%B7%E5%AF%86%E5%BA%A6%E8%AE%A1%E7%AE%97%E5%8F%8A%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/</guid>
+      <description>使用的软件：VASP, VESTA, EidtPlus，SshClient
+ 一 电荷密度计算 在能带计算完成基础下，拷贝 band 文件夹为 charge
+cp -rf band charge 编辑 charge 下文件
+INCAR SYSTEM=x # x 为注释名 #ISTART=1 # 修改 #ICHARG=1 # 修改 #LORBIT=11 # 修改 ENCUT=350 EDIFF=1E-5 IBRION=2 #POTIM=0.25 # 修改 NSW=0 EDIFFG=-1E-2 ISMEAR=0 SIGMA=0.05 PREC=ACCURATE ISIF=2 NPAR=4 LWAVE=FALSE #LCHARG=FALSE LREAL=Auto #IALGO=48 ISYM=0 LPARD=.TRUE. # 增加，注意打点 IBAND=xxx yyy # 价带顶和导带底所在行数 #KPUSE=1 2 3 4 # 增加 LSEPB=.TRUE. # 增加 LSEPK=.FALSE. # 增加 提交作业，作业完成后，得 PARCHG.</description>
+    </item>
+    
+    <item>
+      <title>VASP的能带计算与绘图</title>
+      <link>/post/2017/01/04/vasp%E7%9A%84%E8%83%BD%E5%B8%A6%E8%AE%A1%E7%AE%97%E4%B8%8E%E7%BB%98%E5%9B%BE/</link>
+      <pubDate>Wed, 04 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/01/04/vasp%E7%9A%84%E8%83%BD%E5%B8%A6%E8%AE%A1%E7%AE%97%E4%B8%8E%E7%BB%98%E5%9B%BE/</guid>
+      <description>使用的软件：VASP, Origin, EidtPlus 辅助分析计算的小程序：gk.x, pbnf.x
+ 一 能带计算 1 结构优化 建立opt文件夹，编辑以下文件：
+INCAR SYSTEM=x # x为注释名 ISTART=0 ENCUT=350 EDIFF=1E-5 IBRION=2 POTIM=0.25 NSW=100 EDIFFG=-1E-2 ISMEAR=0 SIGMA=0.05 PREC=ACCURATE ISIF=2 NPAR=4 LWAVE=FALSE LCHARG=FALSE LREAL=Auto IALGO=48 ISYM=0 KPOINTS auto 0 Monkhorst x y z # x y z 为K点选取 0 0 0 POSCAR 导入在 Materials Studio 中转换的坐标信息
+POTCAR 导入赝势库中的原子信息，例：GeS
+cat ~/xxx/PBE/Ge/POTCAR &amp;gt; POTCAR # ~/xxx 为赝势库存放路径 cat ~/xxx/PBE/S/POTCAR &amp;gt;&amp;gt; POTCAR # 原子赝势导入顺序以POSCAR中为准 如果是集群，还需提交作业的脚本 vasp.job 如下</description>
+    </item>
+    
+  </channel>
+</rss>

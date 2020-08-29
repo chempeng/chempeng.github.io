@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Hello fish shell - chempeng</title>
+    <meta property="og:title" content="Hello fish shell - chempeng">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="Finally, a command line shell for the 90s.
+什么是 fish shell ？ 为什么用它？ 可以参考 Fish shell 入门教程 和 量化计算中的技巧（一） 。
+本文记录非 root 用户在无网络连接的服务器上安装 fish shell 及环境变量的配置。
+[&amp;hellip;] 官网下载源码，解压安装。以 fish-2.4.0.tar.gz 为例， &amp;hellip;">
+      <meta property="og:description" content="Finally, a command line shell for the 90s.
+什么是 fish shell ？ 为什么用它？ 可以参考 Fish shell 入门教程 和 量化计算中的技巧（一） 。
+本文记录非 root 用户在无网络连接的服务器上安装 fish shell 及环境变量的配置。
+[&amp;hellip;] 官网下载源码，解压安装。以 fish-2.4.0.tar.gz 为例， &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">chempeng</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/">Home</a></li>
+  
+  <li><a href="/about/">About</a></li>
+  
+  <li><a href="/categories/">Categories</a></li>
+  
+  <li><a href="/tags/">Tags</a></li>
+  
+  <li><a href="/index.xml">Subscribe</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Hello fish shell</h1>
+
+<h3>chempeng
+  /  2018-08-08</h3>
+<hr>
+
+
+      </header>
+
+
+
+<p>Finally, a command line shell for the 90s.</p>
+<p>什么是 fish shell ？ 为什么用它？ 可以参考 <a href="http://www.ruanyifeng.com/blog/2017/05/fish_shell.html">Fish shell 入门教程</a> 和 <a href="https://zhuanlan.zhihu.com/p/27816701">量化计算中的技巧（一）</a> 。</p>
+<p>本文记录非 root 用户在无网络连接的服务器上安装 fish shell 及环境变量的配置。</p>
+<h3 id="1-安装">1. 安装</h3>
+<p><a href="https://fishshell.com/">官网</a>下载源码，解压安装。以 fish-2.4.0.tar.gz 为例，系统 CentOS 6.4。</p>
+<pre><code>tar -zvxf fish-2.4.0.tar.gz
+cd fish-2.4.0
+./configure --prefix=/home/username/opt/fish
+make
+make install
+</code></pre><p>若想登陆即使用 fish，在 <code>.bash_profile</code> 中添加</p>
+<pre><code>exec /home/username/opt/fish/bin/fish -l
+</code></pre><h3 id="2-环境配置">2. 环境配置</h3>
+<p>不同于 bash 在 <code>.bashrc</code> 中修改环境变量，fish 需要在 <code>~/.config/fish/config.fish</code> 中修改。（如果可以使用图形界面，使用 <code>fish_config</code> 命令可打开 Web 界面进行配置。）同时注意其语法也稍有不同，下面有几条示例。</p>
+<pre><code>set -x LD_LIBRARY_PATH /opt/intel/icc/composer_xe_2013.3.163/mkl/lib/intel64/:$LD_LIBRARY_PATH
+set -x LD_LIBRARY_PATH /opt/intel/icc/composer_xe_2013.3.163/compiler/lib/intel64/:$LD_LIBRARY_PATH
+set PATH $PATH /home/username/anaconda3/bin
+set PATH $PATH /home/username/bin
+abbr q20 &quot;nohup mpirun -np 20 vasp &lt;/dev/null&gt; out &amp;&quot;
+alias l &quot;ll -h&quot;
+alias c &quot;cd ..; and l&quot;
+alias cc &quot;cd ../..; and l&quot;
+</code></pre><p>fish 的体验感很棒，尤其对于一些简单繁琐的操作来说，相比它所提升的效率，一些小问题是可以接受和值得折腾的，实在兼容不好就退出呗，也很方便。</p>
+<p>它还有个插件，<a href="https://github.com/oh-my-fish/oh-my-fish">oh my fish</a> ， 目前还没有用它的需要，fish 开箱即用~</p>
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/post/2018/03/19/vasp-%E5%9B%BA%E5%AE%9A%E5%9F%BA%E7%9F%A2%E4%BC%98%E5%8C%96%E7%BB%93%E6%9E%84/">VASP 固定基矢优化结构</a></span>
+  <span class="nav-next"></span>
+</nav>
+
+
+
+
+
+<script src="//yihui.org/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.org/js/center-img.js"></script>
+
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  
+  <hr>
+  <div class="copyright">© <a href="https://chempeng.github.io/">chempeng</a> 2020 | <a href="https://www.zhihu.com/people/chempeng">Zhihu</a> | <a href="https://weibo.com/u/3043897063">Weibo</a></div>
+  
+  </footer>
+  </article>
+  
+  </body>
+</html>
+

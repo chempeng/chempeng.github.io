@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on chempeng</title>
+    <link>/categories/</link>
+    <description>Recent content in Categories on chempeng</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 08 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tool</title>
+      <link>/categories/tool/</link>
+      <pubDate>Wed, 08 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/tool/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Chemistry</title>
+      <link>/categories/chemistry/</link>
+      <pubDate>Mon, 19 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/chemistry/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>VASP</title>
+      <link>/categories/vasp/</link>
+      <pubDate>Mon, 19 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/vasp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Travel</title>
+      <link>/categories/travel/</link>
+      <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/travel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Paper</title>
+      <link>/categories/paper/</link>
+      <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/paper/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Read</title>
+      <link>/categories/read/</link>
+      <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/read/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scientific Writing</title>
+      <link>/categories/scientific-writing/</link>
+      <pubDate>Tue, 28 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/scientific-writing/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

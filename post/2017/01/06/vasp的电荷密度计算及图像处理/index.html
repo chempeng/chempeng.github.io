@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>VASP的电荷密度计算及图像处理 - chempeng</title>
+    <meta property="og:title" content="VASP的电荷密度计算及图像处理 - chempeng">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="使用的软件：VASP, VESTA, EidtPlus，SshClient
+[&amp;hellip;] 在能带计算完成基础下，拷贝 band 文件夹为 charge
+cp -rf band charge 编辑 charge 下文件
+[&amp;hellip;] SYSTEM=x # x 为注释名 #ISTART=1 # 修改 #ICHARG=1 # 修改 #LORBIT=11 # 修改 ENCUT=350 &amp;hellip;">
+      <meta property="og:description" content="使用的软件：VASP, VESTA, EidtPlus，SshClient
+[&amp;hellip;] 在能带计算完成基础下，拷贝 band 文件夹为 charge
+cp -rf band charge 编辑 charge 下文件
+[&amp;hellip;] SYSTEM=x # x 为注释名 #ISTART=1 # 修改 #ICHARG=1 # 修改 #LORBIT=11 # 修改 ENCUT=350 &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">chempeng</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/">Home</a></li>
+  
+  <li><a href="/about/">About</a></li>
+  
+  <li><a href="/categories/">Categories</a></li>
+  
+  <li><a href="/tags/">Tags</a></li>
+  
+  <li><a href="/index.xml">Subscribe</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>VASP的电荷密度计算及图像处理</h1>
+
+<h3>chempeng
+  /  2017-01-06</h3>
+<hr>
+
+
+      </header>
+
+
+
+<blockquote>
+<p>使用的软件：VASP, VESTA, EidtPlus，SshClient</p>
+</blockquote>
+<h1 id="一-电荷密度计算">一 电荷密度计算</h1>
+<p>在能带计算完成基础下，拷贝 band 文件夹为 charge</p>
+<pre><code>cp -rf band charge
+</code></pre><p>编辑 charge 下文件</p>
+<h2 id="incar">INCAR</h2>
+<pre><code>SYSTEM=x # x 为注释名
+#ISTART=1 # 修改
+#ICHARG=1 # 修改
+#LORBIT=11 # 修改
+ENCUT=350
+EDIFF=1E-5
+IBRION=2
+#POTIM=0.25 # 修改
+NSW=0
+EDIFFG=-1E-2
+ISMEAR=0
+SIGMA=0.05
+PREC=ACCURATE
+ISIF=2
+NPAR=4
+LWAVE=FALSE
+#LCHARG=FALSE
+LREAL=Auto
+#IALGO=48
+ISYM=0
+LPARD=.TRUE. # 增加，注意打点
+IBAND=xxx yyy # 价带顶和导带底所在行数
+#KPUSE=1 2 3 4 # 增加
+LSEPB=.TRUE. # 增加
+LSEPK=.FALSE. # 增加
+</code></pre><p>提交作业，作业完成后，得 PARCHG.0xxx.ALLK 和 PARCHG.0yyy.ALLK 文件，使用软件 SshClient 将文件导出至计算机。</p>
+<h1 id="二-图像处理">二 图像处理</h1>
+<ol>
+<li>将 PARCHG.0xxx.ALLK 和 PARCHG.0yyy.ALLK 文件重命名为 得 PARCHG.0xxx.ALLK.vasp 和 PARCHG.0yyy.ALLK.vasp，在软件 VESTA 中打开。</li>
+<li>简单编辑：Edit - Bonds - New - search molecules 和 Do not search atoms&hellip; - Max.length=3 - OK</li>
+<li>取消勾选 Volumetic date 下的 Show sections.</li>
+<li>File - Export Raster Image</li>
+<li>PS 处理。</li>
+</ol>
+
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/post/2017/01/04/vasp%E7%9A%84%E8%83%BD%E5%B8%A6%E8%AE%A1%E7%AE%97%E4%B8%8E%E7%BB%98%E5%9B%BE/">VASP的能带计算与绘图</a></span>
+  <span class="nav-next"><a href="/post/2017/02/26/vasp%E7%9A%84%E5%B7%AE%E5%88%86%E7%94%B5%E8%8D%B7%E5%AF%86%E5%BA%A6%E8%AE%A1%E7%AE%97%E5%8F%8A%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">VASP的差分电荷密度计算及图像处理</a> &rarr;</span>
+</nav>
+
+
+
+
+
+<script src="//yihui.org/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.org/js/center-img.js"></script>
+
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  
+  <hr>
+  <div class="copyright">© <a href="https://chempeng.github.io/">chempeng</a> 2020 | <a href="https://www.zhihu.com/people/chempeng">Zhihu</a> | <a href="https://weibo.com/u/3043897063">Weibo</a></div>
+  
+  </footer>
+  </article>
+  
+  </body>
+</html>
+

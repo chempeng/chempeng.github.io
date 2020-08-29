@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>VASP 的光学性质计算及 vaspkit 的安装与使用 - chempeng</title>
+    <meta property="og:title" content="VASP 的光学性质计算及 vaspkit 的安装与使用 - chempeng">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="使用的软件：VASP, Origin, SshClient, vaspkit
+[&amp;hellip;] 在完成结构优化和静态计算后，拷贝 scf 文件夹为 optic
+cp -rf scf optic 编辑 optic 文件夹下 INCAR
+[&amp;hellip;] SYSTEM=x ISTART=0 ENCUT=350 EDIFF=1E-5 IBRION=-1 # change POTIM=0.25 &amp;hellip;">
+      <meta property="og:description" content="使用的软件：VASP, Origin, SshClient, vaspkit
+[&amp;hellip;] 在完成结构优化和静态计算后，拷贝 scf 文件夹为 optic
+cp -rf scf optic 编辑 optic 文件夹下 INCAR
+[&amp;hellip;] SYSTEM=x ISTART=0 ENCUT=350 EDIFF=1E-5 IBRION=-1 # change POTIM=0.25 &amp;hellip;">
+      
+    
+
+    
+    
+    <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/chempeng/image/img/2020-03-17.jpg">
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">chempeng</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/">Home</a></li>
+  
+  <li><a href="/about/">About</a></li>
+  
+  <li><a href="/categories/">Categories</a></li>
+  
+  <li><a href="/tags/">Tags</a></li>
+  
+  <li><a href="/index.xml">Subscribe</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>VASP 的光学性质计算及 vaspkit 的安装与使用</h1>
+
+<h3>chempeng
+  /  2017-03-17</h3>
+<hr>
+
+
+      </header>
+
+
+
+<blockquote>
+<p>使用的软件：VASP, Origin, SshClient, <a href="http://pan.baidu.com/s/1miQCxhY">vaspkit</a></p>
+</blockquote>
+<h1 id="一-光学性质计算">一 光学性质计算</h1>
+<p>在完成结构优化和静态计算后，拷贝 scf 文件夹为 optic</p>
+<pre><code>cp -rf scf optic
+</code></pre><p>编辑 optic 文件夹下 INCAR</p>
+<h2 id="incar">INCAR</h2>
+<pre><code>SYSTEM=x
+ISTART=0
+ENCUT=350
+EDIFF=1E-5
+IBRION=-1 # change
+POTIM=0.25
+NSW=0 # change
+EDIFFG=-1E-2
+ISMEAR=0
+SIGMA=0.05
+PREC=ACCURATE
+ISIF=2
+NPAR=1 # change 4 to 1
+#LWAVE=FALSE
+#LCHARG=FALSE
+LREAL=Auto
+#IALGO=48
+ISYM=0
+NBANDS=x # add
+LOPTICS=.TRUE. # add
+</code></pre><ul>
+<li>注：<code>NBANDS=x</code>  x 为 OUTCAT 中 NBANDS*2, 可使用 grep 命令查询</li>
+</ul>
+<pre><code>grep NBANDS OUTCAR
+</code></pre><p>提交作业，计算完成后，可查看 OUTCAR 文件，有计算得出介电常数 (Dielectric constant) 的实部和虚部。</p>
+<pre><code>  frequency dependent IMAGINARY DIELECTRIC FUNCTION (independent particle, no local field effects)
+     E(ev)      X         Y         Z        XY        YZ        ZX
+</code></pre><pre><code>  frequency dependent      REAL DIELECTRIC FUNCTION (independent particle, no local field effects)
+     E(ev)      X         Y         Z        XY        YZ        ZX
+</code></pre><p>使用 vaspkit 程序对计算结果进行处理。</p>
+<h1 id="二-vaspkit-的安装与使用">二 vaspkit 的安装与使用</h1>
+<h2 id="安装-installation">安装 Installation</h2>
+<h3 id="使用-sshclient-将已下载的-vaspkithttppanbaiducoms1miqcxhy-导入-linux-服务器安装步骤">使用 SshClient 将已下载的 <a href="http://pan.baidu.com/s/1miQCxhY">vaspkit</a> 导入 linux 服务器，安装步骤：</h3>
+<pre><code>tar -zvxf vaspkit.*.tar.gz
+cd vaspkit.*/src
+modify the Makefile file based on your machine environment;
+make
+</code></pre><ul>
+<li>Note that the formats of POSCAR, CONCAR and CHGCAR files in VASP.5.x are slightly different from those in VASP.4.x. Please set the vasp5=.false. in the src/module.f90 file if you use VASP.4.x</li>
+</ul>
+<h3 id="设置环境变量">设置环境变量</h3>
+<pre><code>vi ~/.bashrc
+alias opt=&quot;~/software/vaspkit.0.51/examples/optic/optics.sh&quot;
+alias kit=&quot;~/software/vaspkit.0.51/src/vaspkit&quot;
+source ~/.bashrc
+</code></pre><ul>
+<li>You need to preparethe <em><strong>REAL.IN</strong></em> and <em><strong>IMAG.IN</strong></em> files which include the real and imaginary parts of frequencydependent complex dielectric function. There is a bash script <em><strong>optics.sh</strong></em> as a reference in the vaspkit.*/examples/optic/ could help you to prepare the real.in and imag.in files.</li>
+</ul>
+<h2 id="光学数据处理">光学数据处理</h2>
+<p>输入命令<code>opt</code>产生 <em><strong>REAL.IN</strong></em> 和 <em><strong>IMAG.IN</strong></em> 文件，依次输入命令<code>kit</code>和<code>51</code>，屏幕显示如下</p>
+<pre><code> +---------------------------------------------------+
+ |       VASPKIT Version: 0.51 (10 Oct. 2016)        |
+ |    A Postprocessing Toolkit For VASP.5.x Code     |
+ |    Developed By Vei WANG (wangvei@icloud.com)     |
+ +---------------------------------------------------+
+
+ =============== Structural Options ==================
+ 2)  Elastic Constant Calculator
+ 3)  Structure Converting  4) Supercell Building
+ 5)  EOS Fitting           6) Symmetry Toolkit
+ 7)  K-Mesh Generating
+ 8)  Band-Structure Path Generating (experimental)
+
+ =============== Electronic Options ==================
+ 11) Total DOS            12) Projected DOS
+ 13) l-m Decomposed DOS
+ 21) Band-Structure       22) Projected Band-Structure
+ 23) 3D Band-Structure for Two-Dimensional Materials
+ 24) One Specific Band-Structure
+
+ ======== Charge Density &amp; Potential Options =========
+ 31) CHG Density          32) Spin Density
+ 33) Spin-Up &amp; -Down Density
+ 34) CHG Difference       35) Spin Density Difference
+ 41) Planar-Average CHG   42) Planar-Average POT
+
+ =============== Optical Options =====================
+ 51) Linear Optics
+
+ ================ Misc Utilities =====================
+ 91) Semiconductor Calculator
+ 92) VASP2BoltzTraP
+
+ 0)  Quit
+ ------------&gt;&gt;
+51
+ +---------------------------------------------------+
+ |    Please prepared IMAG.in and REAL.in files      |
+ |               before runing optics                |
+ |...................................................|
+ |  Calculate absorb,refractive,energylossspectrum,  |
+ |        extinctionr and reflectivity (in eV).      |
+ +---------------------------------------------------+
+
+ --&gt;&gt; (1) Reading IMAG.in and REAL.in Files...
+ --&gt;&gt; (2) Written Optical Files Succesfully!
+ +---------------------------------------------------+
+ |                   * DISCLAIMER *                  |
+ |    CANNOT Guarantee Reliability of VASPKIT Code   |
+ |  CHECK Your Results for Consistency If Necessary  |
+ |               (^.^) GOOD LUCK (^.^)               |
+ +---------------------------------------------------+
+</code></pre><p>输出文件 ABSORB.dat，REFRACTIVE.dat，REFLECTIVITY.dat，EXTINCTION.dat 和 ENERGYLOSSSPECTRUM.dat，依次为 absorption coefficient, refractive coefficient, reflectivity coefficient, extinction coefficient and energy-loss function。导出使用 Origin 作图即可。</p>
+<hr>
+<p>附：<strong>相关光学性质计算公式</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/chempeng/image/img/2020-03-17.jpg" alt=""></p>
+
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/post/2017/02/28/%E7%A7%91%E6%8A%80%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/">科技论文写作</a></span>
+  <span class="nav-next"><a href="/post/2017/03/20/writing-a-paper/">Writing a Paper</a> &rarr;</span>
+</nav>
+
+
+
+
+
+<script src="//yihui.org/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.org/js/center-img.js"></script>
+
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  
+  <hr>
+  <div class="copyright">© <a href="https://chempeng.github.io/">chempeng</a> 2020 | <a href="https://www.zhihu.com/people/chempeng">Zhihu</a> | <a href="https://weibo.com/u/3043897063">Weibo</a></div>
+  
+  </footer>
+  </article>
+  
+  </body>
+</html>
+

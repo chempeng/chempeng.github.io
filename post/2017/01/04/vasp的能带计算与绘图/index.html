@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>VASP的能带计算与绘图 - chempeng</title>
+    <meta property="og:title" content="VASP的能带计算与绘图 - chempeng">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="使用的软件：VASP, Origin, EidtPlus 辅助分析计算的小程序：gk.x, pbnf.x
+[&amp;hellip;] 建立opt文件夹，编辑以下文件：
+[&amp;hellip;] SYSTEM=x # x为注释名 ISTART=0 ENCUT=350 EDIFF=1E-5 IBRION=2 POTIM=0.25 NSW=100 EDIFFG=-1E-2 ISMEAR=0 SIGMA=0.05 &amp;hellip;">
+      <meta property="og:description" content="使用的软件：VASP, Origin, EidtPlus 辅助分析计算的小程序：gk.x, pbnf.x
+[&amp;hellip;] 建立opt文件夹，编辑以下文件：
+[&amp;hellip;] SYSTEM=x # x为注释名 ISTART=0 ENCUT=350 EDIFF=1E-5 IBRION=2 POTIM=0.25 NSW=100 EDIFFG=-1E-2 ISMEAR=0 SIGMA=0.05 &amp;hellip;">
+      
+    
+
+    
+    
+    <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/chempeng/image/img/2017-01-04.jpg">
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">chempeng</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/">Home</a></li>
+  
+  <li><a href="/about/">About</a></li>
+  
+  <li><a href="/categories/">Categories</a></li>
+  
+  <li><a href="/tags/">Tags</a></li>
+  
+  <li><a href="/index.xml">Subscribe</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>VASP的能带计算与绘图</h1>
+
+<h3>chempeng
+  /  2017-01-04</h3>
+<hr>
+
+
+      </header>
+
+
+
+<blockquote>
+<p>使用的软件：VASP, Origin, EidtPlus
+辅助分析计算的小程序：<a href="http://pan.baidu.com/s/1dEHdlr7">gk.x, pbnf.x</a></p>
+</blockquote>
+<h1 id="一-能带计算">一 能带计算</h1>
+<h2 id="1-结构优化">1 结构优化</h2>
+<p>建立opt文件夹，编辑以下文件：</p>
+<h3 id="incar">INCAR</h3>
+<pre><code>SYSTEM=x # x为注释名
+ISTART=0
+ENCUT=350
+EDIFF=1E-5
+IBRION=2
+POTIM=0.25
+NSW=100
+EDIFFG=-1E-2
+ISMEAR=0
+SIGMA=0.05
+PREC=ACCURATE
+ISIF=2
+NPAR=4
+LWAVE=FALSE
+LCHARG=FALSE
+LREAL=Auto
+IALGO=48
+ISYM=0
+</code></pre><h3 id="kpoints">KPOINTS</h3>
+<pre><code>auto
+0
+Monkhorst
+x y z # x y z 为K点选取
+0 0 0
+</code></pre><h3 id="poscar">POSCAR</h3>
+<p>导入在 Materials Studio 中转换的坐标信息</p>
+<h3 id="potcar">POTCAR</h3>
+<p>导入赝势库中的原子信息，例：GeS</p>
+<pre><code>cat ~/xxx/PBE/Ge/POTCAR &gt; POTCAR # ~/xxx 为赝势库存放路径
+cat ~/xxx/PBE/S/POTCAR &gt;&gt; POTCAR # 原子赝势导入顺序以POSCAR中为准
+</code></pre><p>如果是集群，还需提交作业的脚本 vasp.job 如下</p>
+<pre><code>#!/bin/bash
+#PBS -N vasp
+#PBS -o job.log
+#PBS -e job.err
+#PBS -q batch
+#PBS -l walltime=100:00:00
+#PBS -l nodes=1:ppn=8
+
+source ~/.bashrc
+cd ~/xxx # ~/xxx 为文件路径
+mpirun -np 8 vasp &gt; out &lt;/dev/null
+</code></pre><p>提交作业</p>
+<pre><code>qsub vasp.job
+</code></pre><p>计算结束后，<code>cat out</code> 查看体系是否收敛，如收敛则进入下一步计算。</p>
+<h2 id="2-静态自洽计算">2 静态自洽计算</h2>
+<p>在 opt 文件夹下建立 scf 文件夹，编辑以下文件</p>
+<h3 id="incar-1">INCAR</h3>
+<pre><code>SYSTEM=x
+ISTART=0
+ENCUT=350
+EDIFF=1E-5
+IBRION=2
+POTIM=0.25
+NSW=0 # 修改
+EDIFFG=-1E-2
+ISMEAR=0
+SIGMA=0.05
+PREC=ACCURATE
+ISIF=2
+NPAR=4
+#LWAVE=FALSE # 修改
+#LCHARG=FALSE # 修改
+LREAL=Auto
+#IALGO=48 # 修改
+ISYM=0
+</code></pre><h3 id="kpoints-1">KPOINTS</h3>
+<pre><code>auto
+0
+Monkhorst
+x y z # 较opt选取，k值增大
+0 0 0
+</code></pre><h3 id="poscar和potcat">POSCAR和POTCAT</h3>
+<pre><code>cp ../CONTCAR POSCAR
+cp ../POTCAR .
+</code></pre><p>提交作业，产生WAVECAR进行下一步计算</p>
+<h2 id="3-能带计算">3 能带计算</h2>
+<p>在 opt 文件夹下拷贝建立 band 文件夹</p>
+<pre><code>cp -rf scf band
+</code></pre><p>编辑 band 下文件</p>
+<h3 id="incar-2">INCAR</h3>
+<pre><code>SYSTEM=x
+ISTART=1 # 修改
+ICHARG=11 # 从CHGCAR中读入电荷分布，并且在计算中保持不变
+LORBIT=10 # 增加
+ENCUT=350
+EDIFF=1E-5
+IBRION=2
+POTIM=0.25
+NSW=0
+EDIFFG=-1E-2
+ISMEAR=0
+SIGMA=0.05
+PREC=ACCURATE
+ISIF=2
+NPAR=4
+LWAVE=FALSE # 修改
+#LCHARG=FALSE
+LREAL=Auto
+#IALGO=48
+ISYM=0
+</code></pre><h3 id="kpoints-2">KPOINTS</h3>
+<h4 id="1-设置环境变量">1. 设置环境变量</h4>
+<pre><code>vi ~/.bashrc
+alias gk=&quot;~/software/ktool/gk.x&quot;
+alias pb=&quot;~/software/ktool/pbnf.x&quot;
+alias f=&quot;grep E-fermi OUTCAR&quot;
+alias lv=&quot;grep -A3 'lattice vectors' OUTCAR&quot;
+source ~/.bashrc
+</code></pre><h4 id="2-编辑syml文件例">2. 编辑syml文件，例：</h4>
+<pre><code>5 # 高对称点数目
+20 20 20 20 # 高对称点间隔取点数目
+G 0.0    0.0    0.0
+M 0.5    0.0    0.0
+K 0.5    0.0    0.5
+Z 0.0    0.0    0.5
+G 0.0    0.0    0.0 # 高对称点选取
+    12.840000153  0.000000000  0.000000000     0.077881619  0.000000000  0.000000000
+     0.000000000 10.406299591  0.000000000     0.000000000  0.096095638  0.000000000
+     0.000000000  0.000000000 39.669998169     0.000000000  0.000000000  0.025207967 # 实坐标与虚坐标
+-20.0 20.0 # 取值范围
+-0.0460 # 费米能级
+</code></pre><p>实坐标与虚坐标通过命令<code>lv</code>得到，费米能级通过命令<code>f</code>得到，高对称点可查阅<a href="http://pan.baidu.com/s/1cveSEi">参考文献</a>选取。</p>
+<h4 id="4-kpoints的获取与编辑">4 KPOINTS的获取与编辑</h4>
+<p>输入命令<code>gk</code>获取KOINTS文件，若文件后有多行零，则删去，且第二行数据减去相应删去行数。</p>
+<p>提交作业，计算结束后生成 EIGENVAL 文件，输入命令<code>pb</code>得到能带数据文件 bnd.dat 和 highk.dat，将数据导入Origin绘图。</p>
+<h1 id="二-能带绘图">二 能带绘图</h1>
+<p>将能带数据文件 bnd.dat 和 highk.dat 导入Origin， 前两列为 bnd.dat 数据，后两列为 highk.dat 数据，格式如图，可使用 EditPlus 进行数据编辑。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/chempeng/image/img/2017-01-04.jpg" alt=""></p>
+<p>参考资料</p>
+<ol>
+<li>VASP 软件包的使用入门指南</li>
+</ol>
+
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev"></span>
+  <span class="nav-next"><a href="/post/2017/01/06/vasp%E7%9A%84%E7%94%B5%E8%8D%B7%E5%AF%86%E5%BA%A6%E8%AE%A1%E7%AE%97%E5%8F%8A%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">VASP的电荷密度计算及图像处理</a> &rarr;</span>
+</nav>
+
+
+
+
+
+<script src="//yihui.org/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.org/js/center-img.js"></script>
+
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  
+  <hr>
+  <div class="copyright">© <a href="https://chempeng.github.io/">chempeng</a> 2020 | <a href="https://www.zhihu.com/people/chempeng">Zhihu</a> | <a href="https://weibo.com/u/3043897063">Weibo</a></div>
+  
+  </footer>
+  </article>
+  
+  </body>
+</html>
+
