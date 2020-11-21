@@ -259,5 +259,16 @@ cat ~/xxx/PBE/Ge/POTCAR &amp;gt; POTCAR # ~/xxx 为赝势库存放路径 cat ~/x
       <description>Hello, I am chempeng. I am a PhD student in condensed matter physics currently living in ShangHai. If you want to get in touch with me, email is best.</description>
     </item>
     
+    <item>
+      <title>Link</title>
+      <link>/link/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/link/</guid>
+      <description>Software:
+ Vasp: https://www.vasp.at/ Qe: http://www.quantum-espresso.org/ Vaspkit: https://vaspkit.com/ Pymatgen: https://pymatgen.org/ Ase: https://wiki.fysik.dtu.dk/ase/ Phonopy: https://phonopy.github.io/phonopy/ Epw: http://epw.org.uk/ BoltzTraP2: https://gitlab.com/sousaw/BoltzTraP2/-/wikis/home ShengBTE: http://www.shengbte.org/ Yambo: http://www.yambo-code.org/wiki/index.php?title=Tutorials almaBTE: http://www.almabte.eu/ Alamode: https://alamode.readthedocs.io/en/latest/intro.html Vesta: http://jp-minerals.org/vesta/en/ Xcrysden: http://www.xcrysden.org/  Book:
+ Density Functional Theory: A Practical Introduction Quantum Chemistry Electronic Structure 群论及其在固体物理中的应用  </description>
+    </item>
+    
   </channel>
 </rss>
