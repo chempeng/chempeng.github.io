@@ -92,7 +92,7 @@
 <p>在<strong>VASP的差分电荷密度计算及图像处理 VASP 的差分电荷密度计算及图像处理</strong>中介绍了差分电荷密度的计算方法与三维图像处理，在文献中常常能见到二维的差分电荷图与平均到某个方向的差分电荷曲线（如图）。一般二维的差分电荷密度图在 VESTA 中 Utilitie / 2D Data Display 便可以进行处理，本文简单介绍一下平面平均差分电荷 (The plane-average electron difference) 的数据处理方式。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/chempeng/image/img/2017-11-29.jpg" alt=""></p>
 <p>首先使用 chgdiff.pl 对计算得到的 CHGCAR 进行差分处理，这里对脚本进行了简单的修改（输出结果位置 % 前添加空格），使得输出结果与 VASP 的 CHGCAR 的格式保持一致，脚本如下：</p>
-<pre><code>#!/usr/bin/env perl
+<pre tabindex="0"><code>#!/usr/bin/env perl
 #;-*- Perl -*-
 
 @args = @ARGV;
@@ -186,7 +186,7 @@ close(IN1);
 <li>处理得到的数据导入绘图软件作图时，需注意，横坐标为所选取方向的格点数，纵坐标对应电荷密度乘 cell 的体积，可做相应的单位转换。</li>
 </ol>
 <p>附修改后源码</p>
-<pre><code>      PROGRAM VTOTAV
+<pre tabindex="0"><code>      PROGRAM VTOTAV
       PARAMETER(NGXM=256,NOUTM=1024)
       CHARACTER*80 HEADER
       DIMENSION VLOCAL(NGXM*NGXM*NGXM),VAV(NOUTM)
@@ -277,7 +277,7 @@ C      READ(20,'(10F8.3)',ERR=1000,END=1000) (VLOCAL(I),I=1,NPLWV)
       STOP
       END
 </code></pre><p>使用前需编译</p>
-<pre><code>ifort -o vtotav.x vtotav.f
+<pre tabindex="0"><code>ifort -o vtotav.x vtotav.f
 </code></pre><p>使用 <code>./vtotav.x</code> 命令，选取所需方向，即可处理。</p>
 <p>同样的道理，可以使用 vtotav.x 分别处理 CHGCAR，再在 Origin 或是 Excel 里进行列相减，输出的结果是一致的。PS: 使用王老师的 vaspkit 也可以很方便的处理平面平均电荷 (Planar-Average CHG), 再手动处理一下就可以得到 The plane-average electron difference。</p>
 <p>附朱全喜老师的一段话</p>

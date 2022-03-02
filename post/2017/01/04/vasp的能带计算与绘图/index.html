@@ -101,7 +101,7 @@
 <h2 id="1-结构优化">1 结构优化</h2>
 <p>建立opt文件夹，编辑以下文件：</p>
 <h3 id="incar">INCAR</h3>
-<pre><code>SYSTEM=x # x为注释名
+<pre tabindex="0"><code>SYSTEM=x # x为注释名
 ISTART=0
 ENCUT=350
 EDIFF=1E-5
@@ -120,7 +120,7 @@ LREAL=Auto
 IALGO=48
 ISYM=0
 </code></pre><h3 id="kpoints">KPOINTS</h3>
-<pre><code>auto
+<pre tabindex="0"><code>auto
 0
 Monkhorst
 x y z # x y z 为K点选取
@@ -129,10 +129,10 @@ x y z # x y z 为K点选取
 <p>导入在 Materials Studio 中转换的坐标信息</p>
 <h3 id="potcar">POTCAR</h3>
 <p>导入赝势库中的原子信息，例：GeS</p>
-<pre><code>cat ~/xxx/PBE/Ge/POTCAR &gt; POTCAR # ~/xxx 为赝势库存放路径
+<pre tabindex="0"><code>cat ~/xxx/PBE/Ge/POTCAR &gt; POTCAR # ~/xxx 为赝势库存放路径
 cat ~/xxx/PBE/S/POTCAR &gt;&gt; POTCAR # 原子赝势导入顺序以POSCAR中为准
 </code></pre><p>如果是集群，还需提交作业的脚本 vasp.job 如下</p>
-<pre><code>#!/bin/bash
+<pre tabindex="0"><code>#!/bin/bash
 #PBS -N vasp
 #PBS -o job.log
 #PBS -e job.err
@@ -144,12 +144,12 @@ source ~/.bashrc
 cd ~/xxx # ~/xxx 为文件路径
 mpirun -np 8 vasp &gt; out &lt;/dev/null
 </code></pre><p>提交作业</p>
-<pre><code>qsub vasp.job
+<pre tabindex="0"><code>qsub vasp.job
 </code></pre><p>计算结束后，<code>cat out</code> 查看体系是否收敛，如收敛则进入下一步计算。</p>
 <h2 id="2-静态自洽计算">2 静态自洽计算</h2>
 <p>在 opt 文件夹下建立 scf 文件夹，编辑以下文件</p>
 <h3 id="incar-1">INCAR</h3>
-<pre><code>SYSTEM=x
+<pre tabindex="0"><code>SYSTEM=x
 ISTART=0
 ENCUT=350
 EDIFF=1E-5
@@ -168,21 +168,21 @@ LREAL=Auto
 #IALGO=48 # 修改
 ISYM=0
 </code></pre><h3 id="kpoints-1">KPOINTS</h3>
-<pre><code>auto
+<pre tabindex="0"><code>auto
 0
 Monkhorst
 x y z # 较opt选取，k值增大
 0 0 0
 </code></pre><h3 id="poscar和potcat">POSCAR和POTCAT</h3>
-<pre><code>cp ../CONTCAR POSCAR
+<pre tabindex="0"><code>cp ../CONTCAR POSCAR
 cp ../POTCAR .
 </code></pre><p>提交作业，产生WAVECAR进行下一步计算</p>
 <h2 id="3-能带计算">3 能带计算</h2>
 <p>在 opt 文件夹下拷贝建立 band 文件夹</p>
-<pre><code>cp -rf scf band
+<pre tabindex="0"><code>cp -rf scf band
 </code></pre><p>编辑 band 下文件</p>
 <h3 id="incar-2">INCAR</h3>
-<pre><code>SYSTEM=x
+<pre tabindex="0"><code>SYSTEM=x
 ISTART=1 # 修改
 ICHARG=11 # 从CHGCAR中读入电荷分布，并且在计算中保持不变
 LORBIT=10 # 增加
@@ -204,14 +204,14 @@ LREAL=Auto
 ISYM=0
 </code></pre><h3 id="kpoints-2">KPOINTS</h3>
 <h4 id="1-设置环境变量">1. 设置环境变量</h4>
-<pre><code>vi ~/.bashrc
+<pre tabindex="0"><code>vi ~/.bashrc
 alias gk=&quot;~/software/ktool/gk.x&quot;
 alias pb=&quot;~/software/ktool/pbnf.x&quot;
 alias f=&quot;grep E-fermi OUTCAR&quot;
 alias lv=&quot;grep -A3 'lattice vectors' OUTCAR&quot;
 source ~/.bashrc
 </code></pre><h4 id="2-编辑syml文件例">2. 编辑syml文件，例：</h4>
-<pre><code>5 # 高对称点数目
+<pre tabindex="0"><code>5 # 高对称点数目
 20 20 20 20 # 高对称点间隔取点数目
 G 0.0    0.0    0.0
 M 0.5    0.0    0.0

@@ -6,11 +6,7 @@
     <description>Recent content in Home on chempeng</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Jan 2022 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 09 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Logseq 的 Zotero 配置及 Git 版本控制同步</title>
       <link>/post/2022/01/09/logseq-%E7%9A%84-zotero-%E9%85%8D%E7%BD%AE%E5%8F%8A-git-%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%90%8C%E6%AD%A5/</link>
@@ -20,6 +16,19 @@
       <description>本文基于 Win10, Logseq 0.5.8, Zotero 5.0.96.3 及 Termux v0.117
  Logseq 可与 Zotero 实现联动1并可以实现 PDF 批注跳转2，目前 Logseq 并未提供同步服务，可借助第三方同步工具（坚果云等），此外也可通过 Git 上传至 Github 或 Gitee 等进行版本控制及云存储同步，但一般如 Github 有仓库大小限制，可将 Zotero 中的 PDF 附件通过 知识管理软件 Zotero 的使用 中附件同步方法分离存储在坚果云空间中，即可在 Logseq 中打开标注 PDF 又不占用 Github 的仓库空间，本文将简单介绍 Logseq 的 Zotero 配置方法，此外介绍 Logseq 安卓移动端的 Git 同步方法。
 Logseq 的 Zotero 配置 Zotero 的 API 获取配置具体过程参见1，简单来说，进入 Zotero API 设置界面，为 Logseq 新建 Key，并将 Key ID 和 User ID 填入 Logseq 的 Zotero settings 中（设置 -&amp;gt; 编辑器 -&amp;gt; Zotero settings）。为分离存储 PDF 附件，需参照 知识管理软件 Zotero 的使用 使用 Zotfile 插件进行同步，注意 Logseq 的 Zotero settings中 Zotero linked attachment base directory 和 Zotero data directory 的设置，以下分别为 Zotero, Zotfile 和 Logseq 的设置，保持一致即可。</description>
+    </item>
+    
+    <item>
+      <title>win10 家庭版内网远程控制</title>
+      <link>/post/2021/09/05/win10-%E5%AE%B6%E5%BA%AD%E7%89%88%E5%86%85%E7%BD%91%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6/</link>
+      <pubDate>Sun, 05 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2021/09/05/win10-%E5%AE%B6%E5%BA%AD%E7%89%88%E5%86%85%E7%BD%91%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6/</guid>
+      <description> 本文基于 Win10, 安卓手机或平板电脑（苹果手机或 Mac 电脑适用）
+ 需求：在内网环境下，手机或平板通过微软远程桌面功能远程控制 Win10 家庭版
+软件：
+ SuperRDP GitHub | 下载 RDPWrap GitHub | 下载 Remote Desktop v8 下载 | v10 下载  电脑端配置 Win10 家庭无法使用远程桌面功能，故通过软件绕过系统实现这一功能。
+ 控制面板 -&amp;gt; 系统和安全 -&amp;gt; 允许远程访问（系统）-&amp;gt; 勾选允许远程协助连接这台计算机 安装运行 SuperRDP，使用说明见 GitHub 检测远程桌面是否启用成功，使用 RDPWrap 中 RDPCheck.exe 程序  可登录，即启用成功 拒绝访问，打开 RDPConf.exe，取消勾选 Single session per user，再尝试登录   设置 -&amp;gt; 系统 -&amp;gt; 电源和睡眠 -&amp;gt; 睡眠改为从不  远程端配置  下载安装 Remote Desktop v8 或 v10 版本 处于内网环境或通过 VPN 连接内网 添加 Desktop，PC name 填无线网络 ipv4 地址，User name 填微软登录账户和密码即可，点击即可远程访问  </description>
     </item>
     
     <item>

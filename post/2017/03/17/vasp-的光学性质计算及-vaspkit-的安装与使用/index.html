@@ -100,10 +100,10 @@ cp -rf scf optic 编辑 optic 文件夹下 INCAR
 </blockquote>
 <h1 id="一-光学性质计算">一 光学性质计算</h1>
 <p>在完成结构优化和静态计算后，拷贝 scf 文件夹为 optic</p>
-<pre><code>cp -rf scf optic
+<pre tabindex="0"><code>cp -rf scf optic
 </code></pre><p>编辑 optic 文件夹下 INCAR</p>
 <h2 id="incar">INCAR</h2>
-<pre><code>SYSTEM=x
+<pre tabindex="0"><code>SYSTEM=x
 ISTART=0
 ENCUT=350
 EDIFF=1E-5
@@ -126,17 +126,17 @@ LOPTICS=.TRUE. # add
 </code></pre><ul>
 <li>注：<code>NBANDS=x</code>  x 为 OUTCAT 中 NBANDS*2, 可使用 grep 命令查询</li>
 </ul>
-<pre><code>grep NBANDS OUTCAR
+<pre tabindex="0"><code>grep NBANDS OUTCAR
 </code></pre><p>提交作业，计算完成后，可查看 OUTCAR 文件，有计算得出介电常数 (Dielectric constant) 的实部和虚部。</p>
-<pre><code>  frequency dependent IMAGINARY DIELECTRIC FUNCTION (independent particle, no local field effects)
+<pre tabindex="0"><code>  frequency dependent IMAGINARY DIELECTRIC FUNCTION (independent particle, no local field effects)
      E(ev)      X         Y         Z        XY        YZ        ZX
-</code></pre><pre><code>  frequency dependent      REAL DIELECTRIC FUNCTION (independent particle, no local field effects)
+</code></pre><pre tabindex="0"><code>  frequency dependent      REAL DIELECTRIC FUNCTION (independent particle, no local field effects)
      E(ev)      X         Y         Z        XY        YZ        ZX
 </code></pre><p>使用 vaspkit 程序对计算结果进行处理。</p>
 <h1 id="二-vaspkit-的安装与使用">二 vaspkit 的安装与使用</h1>
 <h2 id="安装-installation">安装 Installation</h2>
 <h3 id="使用-sshclient-将已下载的-vaspkithttppanbaiducoms1miqcxhy-导入-linux-服务器安装步骤">使用 SshClient 将已下载的 <a href="http://pan.baidu.com/s/1miQCxhY">vaspkit</a> 导入 linux 服务器，安装步骤：</h3>
-<pre><code>tar -zvxf vaspkit.*.tar.gz
+<pre tabindex="0"><code>tar -zvxf vaspkit.*.tar.gz
 cd vaspkit.*/src
 modify the Makefile file based on your machine environment;
 make
@@ -144,7 +144,7 @@ make
 <li>Note that the formats of POSCAR, CONCAR and CHGCAR files in VASP.5.x are slightly different from those in VASP.4.x. Please set the vasp5=.false. in the src/module.f90 file if you use VASP.4.x</li>
 </ul>
 <h3 id="设置环境变量">设置环境变量</h3>
-<pre><code>vi ~/.bashrc
+<pre tabindex="0"><code>vi ~/.bashrc
 alias opt=&quot;~/software/vaspkit.0.51/examples/optic/optics.sh&quot;
 alias kit=&quot;~/software/vaspkit.0.51/src/vaspkit&quot;
 source ~/.bashrc
@@ -153,7 +153,7 @@ source ~/.bashrc
 </ul>
 <h2 id="光学数据处理">光学数据处理</h2>
 <p>输入命令<code>opt</code>产生 <em><strong>REAL.IN</strong></em> 和 <em><strong>IMAG.IN</strong></em> 文件，依次输入命令<code>kit</code>和<code>51</code>，屏幕显示如下</p>
-<pre><code> +---------------------------------------------------+
+<pre tabindex="0"><code> +---------------------------------------------------+
  |       VASPKIT Version: 0.51 (10 Oct. 2016)        |
  |    A Postprocessing Toolkit For VASP.5.x Code     |
  |    Developed By Vei WANG (wangvei@icloud.com)     |

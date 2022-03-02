@@ -113,11 +113,11 @@ mkdir AB mkdir A mkdir B INCAR file SYSTEM=X ISTART=0 &amp;hellip;">
 <li>Some NGX NGY NGZ</li>
 </ol>
 <p><strong>结构优化后</strong>的自洽计算</p>
-<pre><code>mkdir AB
+<pre tabindex="0"><code>mkdir AB
 mkdir A
 mkdir B
 </code></pre><h2 id="incar-file">INCAR file</h2>
-<pre><code>SYSTEM=X
+<pre tabindex="0"><code>SYSTEM=X
 ISTART=0
 ENCUT=350
 EDIFF=1E-5
@@ -141,13 +141,13 @@ NGZ=z # 增加
 </code></pre><ul>
 <li>NGX NGY NGZ 的获取：在结构优化的 OUTCAR 文件中搜索，设置环境变量后输入<code>ngx</code>获得</li>
 </ul>
-<pre><code>vi ~/.bashrc
+<pre tabindex="0"><code>vi ~/.bashrc
 alias ngx=&quot;grep -A3 'NGX' OUTCAR&quot;
 source ~/.bashrc
 </code></pre><h2 id="poscar-file">POSCAR file</h2>
-<pre><code>cp opt/CONTCAR POSCAR
+<pre tabindex="0"><code>cp opt/CONTCAR POSCAR
 </code></pre><p>A, B 各自保留优化后的 POSCAR 部分，编辑删除 POSCAR 文件</p>
-<pre><code>vi POSCAR
+<pre tabindex="0"><code>vi POSCAR
 :set nu # 获取编辑行数
 :x,y d # 删除 x 行至 y 行
 :wq

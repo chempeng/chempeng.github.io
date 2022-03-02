@@ -136,7 +136,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/chempeng/image/img/2018-03-06-4.jpg" alt=""></p>
 <p>预测的频率可从Ge_PhononDisp.castep文件中得到。</p>
 <p>在 Project Explorer 中双击 Ge_PhononDisp.castep 。按 CRTL+F 键，搜索 Vibrational Frequencies。结果文件中的部分内容如下所示：</p>
-<pre><code>==============================================================================
+<pre tabindex="0"><code>==============================================================================
  +                           Vibrational Frequencies                          +
  +                           -----------------------                          +
  +                                                                            +
@@ -250,23 +250,23 @@
 </ol>
 <h3 id="anaconda-安装">Anaconda 安装</h3>
 <p>下载 Anaconda <a href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">清华镜像</a> （国内下载速度快），本文以 Anaconda3-5.0.1-Linux-x86_64.sh 为例进行安装。</p>
-<pre><code>bash Anaconda3-5.0.1-Linux-x86_64.sh
+<pre tabindex="0"><code>bash Anaconda3-5.0.1-Linux-x86_64.sh
 </code></pre><p>按照提示进行安装，当提示是否添加添加环境变量时，输入 yes。或输入：</p>
-<pre><code>echo 'export PATH=&quot;~/anaconda3/bin:$PATH&quot;' &gt;&gt; ~/.bashrc
+<pre tabindex="0"><code>echo 'export PATH=&quot;~/anaconda3/bin:$PATH&quot;' &gt;&gt; ~/.bashrc
 source ~/.bashrc
 </code></pre><p>终端输入 <code>conda</code> 查看是否安装成功，显示</p>
-<pre><code>[yourname@localhost ~]$ conda
+<pre tabindex="0"><code>[yourname@localhost ~]$ conda
 usage: conda [-h] [-V] command ...
 
 conda is a tool for managing and deploying applications, environments and packages.
 ..........
 </code></pre><h3 id="phonopy-安装">Phonopy 安装</h3>
 <p>至<a href="https://pypi.python.org/pypi/phonopy">官网下载</a> Phonopy，本文以 phonopy-1.11.2.tar.gz 版本为例，提供<a href="https://pan.baidu.com/s/1IrcAX98aycXNLGyQhLEvcQ">百度云下载</a>，解压</p>
-<pre><code>tar xzvf phonopy-1.11.2.tar.gz
+<pre tabindex="0"><code>tar xzvf phonopy-1.11.2.tar.gz
 </code></pre><p>进入安装目录，安装</p>
-<pre><code>python setup.py install
+<pre tabindex="0"><code>python setup.py install
 </code></pre><p>输入 <code>phonopy</code> 查看是否安装成功，显示</p>
-<pre><code>[yourname@localhost ~]$ phonopy
+<pre tabindex="0"><code>[yourname@localhost ~]$ phonopy
         _
   _ __ | |__   ___  _ __   ___   _ __  _   _
  | '_ \| '_ \ / _ \| '_ \ / _ \ | '_ \| | | |
@@ -285,7 +285,7 @@ Crystal structure file of POSCAR (default file name) could not be found.
 </code></pre><h2 id="2-dfpt">2. DFPT</h2>
 <p>此部分以<a href="https://atztogo.github.io/phonopy/vasp-dfpt.html">官网算例 NaCl</a> 介绍，做简单翻译补充。</p>
 <h3 id="1-准备原胞命名为-poscar-unitcell">1. 准备原胞，命名为 <code>POSCAR-unitcell</code></h3>
-<pre><code>Na Cl
+<pre tabindex="0"><code>Na Cl
    1.00000000000000
      5.6903014761756712    0.0000000000000000    0.0000000000000000
      0.0000000000000000    5.6903014761756712    0.0000000000000000
@@ -301,12 +301,12 @@ Direct
   0.0000000000000000  0.5000000000000000  0.0000000000000000
   0.0000000000000000  0.0000000000000000  0.5000000000000000
 </code></pre><h3 id="2-扩胞">2. 扩胞</h3>
-<pre><code>phonopy -d --dim=&quot;2 2 2&quot; -c POSCAR-unitcell
+<pre tabindex="0"><code>phonopy -d --dim=&quot;2 2 2&quot; -c POSCAR-unitcell
 </code></pre><h3 id="3-vasp-计算力常数">3. vasp 计算力常数</h3>
 <p>以上一步生成的 SPOSCAR 为 POSCAR，准备 KPOINTS、POTCAR 和 INCAR，进行 vasp 计算。</p>
-<pre><code>mv SPOSCAR POSCAR
+<pre tabindex="0"><code>mv SPOSCAR POSCAR
 </code></pre><p>INCAR</p>
-<pre><code>PREC   = Accurate
+<pre tabindex="0"><code>PREC   = Accurate
 IBRION = 8
 NSW    = 1
 ENCUT  = 500
@@ -319,10 +319,10 @@ LWAVE  = .FALSE.
 LCHARG = .FALSE.
 </code></pre><h3 id="4-收集力常数">4. 收集力常数</h3>
 <p>用 vasp 计算得到的 vasprun.xml 生成力常数文件 FORCE_CONSTANTS。</p>
-<pre><code>phonopy --fc vasprun.xml
+<pre tabindex="0"><code>phonopy --fc vasprun.xml
 </code></pre><h3 id="5-phonopy-后处理">5. phonopy 后处理</h3>
 <p>需要准备输入文件</p>
-<pre><code># band.conf
+<pre tabindex="0"><code># band.conf
 ATOM_NAME = Na Cl
 DIM = 2 2 2
 PRIMITIVE_AXIS = 0.0 0.5 0.5  0.5 0.0 0.5  0.5 0.5 0.0
@@ -334,12 +334,12 @@ $ phonopy --dim=&quot;2 2 2&quot; -c POSCAR-unitcell band.conf     #band plot
 <ol>
 <li>后处理时加参数 <code>--factor=521.471</code> 可将频率单位转换为 cm-1。</li>
 <li><code>bandplot --gnuplot band.yaml &gt; band.dat</code> 可以把声子的结构转化成 dat 文件用 oringin 来画图。</li>
-<li>如果计算超内存，使用命令 <code>ulimit -s unlimited</code> 。</li>
+<li>如果计算超内存，使用命令 <code>ulimit -s unlimited </code> 。</li>
 </ol>
 <h2 id="3-finite-difference-method">3. Finite difference method</h2>
 <p>同以<a href="https://atztogo.github.io/phonopy/vasp.html">官网算例</a>介绍</p>
 <h3 id="1-准备原胞扩胞">1. 准备原胞，扩胞</h3>
-<pre><code>Si O
+<pre tabindex="0"><code>Si O
    1.00000000000000
      4.0444481195475825    0.0000000000000000    0.0000000000000000
      0.0000000000000000    4.0444481195475825    0.0000000000000000
@@ -353,18 +353,18 @@ Direct
   0.1969917662673621  0.8030082337326379  0.5000000000000000
   0.8030082337326379  0.1969917662673621  0.5000000000000000
 </code></pre><p>创建一系列有限位移的超胞</p>
-<pre><code>phonopy -d --dim='2 2 3'
+<pre tabindex="0"><code>phonopy -d --dim='2 2 3'
 </code></pre><p>产生 disp.yaml  phonopy_disp.yaml  POSCAR  POSCAR-001  POSCAR-002  POSCAR-003  SPOSCAR</p>
 <h3 id="2-vasp-计算力常数">2. vasp 计算力常数</h3>
 <p>准备输入文件KPOINTS、POTCAR、POSCAR和INCAR，使用脚本批量计算，<code>generation.sh</code> (根据所产生 POSCAR 数量修改）</p>
-<pre><code>#!/bin/bash
+<pre tabindex="0"><code>#!/bin/bash
   for i in 1 2 3; do
     mkdir $i
     cp POSCAR-00$i $i/POSCAR
     cp INCAR KPOINTS POTCAR $i/
   done
 </code></pre><p>INCAR</p>
-<pre><code>PREC   = Accurate
+<pre tabindex="0"><code>PREC   = Accurate
 IBRION = -1
 ENCUT  = 500
 EDIFF  = 1.0e-08
@@ -374,10 +374,10 @@ LREAL  = .FALSE.
 LWAVE  = .FALSE.
 LCHARG = .FALSE.
 </code></pre><h3 id="3-收集力常数">3. 收集力常数</h3>
-<pre><code>phonopy -f 1/vasprun.xml 2/vasprun.xml 3/vasprun.xml
+<pre tabindex="0"><code>phonopy -f 1/vasprun.xml 2/vasprun.xml 3/vasprun.xml
 </code></pre><h3 id="4-phonopy-后处理">4. phonopy 后处理</h3>
 <p>声子态密度，热性质（自由能，熵，等压热容）的计算需要准备 mesh.conf 文件，投影态密度的计算准备 pdos.conf 文件，声子谱计算准备 band.conf 文件</p>
-<pre><code># mesh.conf
+<pre tabindex="0"><code># mesh.conf
 ATOM_NAME = Si O
 DIM = 2 2 3
 MP = 8 8 8

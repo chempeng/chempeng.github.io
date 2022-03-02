@@ -110,16 +110,16 @@ The F90 source code is also available:</li>
 <li><a href="http://theory.cm.utexas.edu/henkelman/code/bader/download/bader.tar.gz">Source Code (v1.0 01/11/17)</a></li>
 </ul>
 <p>对于二进制文件，解压后添加可执行权限即可运行使用。</p>
-<pre><code>tar zxvf bader_lnx_64.tar.gz
+<pre tabindex="0"><code>tar zxvf bader_lnx_64.tar.gz
 chmod +x bader
 </code></pre><p>对于源码，需进行如下编译</p>
-<pre><code>tar zxvf bader.tar.gz
+<pre tabindex="0"><code>tar zxvf bader.tar.gz
 cd bader
 cp makefile.lnx_ifort makefile
 make
 </code></pre><h1 id="vasp-计算处理">VASP 计算处理</h1>
 <p>静态计算时，INCAR 添加标签 <code>LAECHG =.TRUE.</code></p>
-<pre><code>SYSTEM=x
+<pre tabindex="0"><code>SYSTEM=x
 ISTART=0
 ENCUT=350
 EDIFF=1E-5
@@ -139,10 +139,10 @@ LREAL=Auto
 ISYM=0
 LAECHG =.TRUE.
 </code></pre><p>提交任务，计算完成后生成文件 AECCAR0、AECCAR1、AECCAR2，执行</p>
-<pre><code>./chgsum.pl AECCAR0 AECCAR2
+<pre tabindex="0"><code>./chgsum.pl AECCAR0 AECCAR2
 ./bader CHGCAR -ref CHGCAR_sum
 </code></pre><p>生成文件 ACF.dat、AVF.dat、BCF.dat，ACF.dat 文件包含价电子的电荷信息，如下所示</p>
-<pre><code>    #         X           Y           Z       CHARGE      MIN DIST   ATOMIC VOL
+<pre tabindex="0"><code>    #         X           Y           Z       CHARGE      MIN DIST   ATOMIC VOL
  --------------------------------------------------------------------------------
     1    0.527018    1.280693    0.807511    3.177949     1.016776    28.833043
     2    2.702306    3.774240    2.704479    3.181001     1.011214    28.792487

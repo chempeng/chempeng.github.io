@@ -97,16 +97,16 @@
 <p>本文记录非 root 用户在无网络连接的服务器上安装 fish shell 及环境变量的配置。</p>
 <h3 id="1-安装">1. 安装</h3>
 <p><a href="https://fishshell.com/">官网</a>下载源码，解压安装。以 fish-2.4.0.tar.gz 为例，系统 CentOS 6.4。</p>
-<pre><code>tar -zvxf fish-2.4.0.tar.gz
+<pre tabindex="0"><code>tar -zvxf fish-2.4.0.tar.gz
 cd fish-2.4.0
 ./configure --prefix=/home/username/opt/fish
 make
 make install
 </code></pre><p>若想登陆即使用 fish，在 <code>.bash_profile</code> 中添加</p>
-<pre><code>exec /home/username/opt/fish/bin/fish -l
+<pre tabindex="0"><code>exec /home/username/opt/fish/bin/fish -l
 </code></pre><h3 id="2-环境配置">2. 环境配置</h3>
 <p>不同于 bash 在 <code>.bashrc</code> 中修改环境变量，fish 需要在 <code>~/.config/fish/config.fish</code> 中修改。（如果可以使用图形界面，使用 <code>fish_config</code> 命令可打开 Web 界面进行配置。）同时注意其语法也稍有不同，下面有几条示例。</p>
-<pre><code>set -x LD_LIBRARY_PATH /opt/intel/icc/composer_xe_2013.3.163/mkl/lib/intel64/:$LD_LIBRARY_PATH
+<pre tabindex="0"><code>set -x LD_LIBRARY_PATH /opt/intel/icc/composer_xe_2013.3.163/mkl/lib/intel64/:$LD_LIBRARY_PATH
 set -x LD_LIBRARY_PATH /opt/intel/icc/composer_xe_2013.3.163/compiler/lib/intel64/:$LD_LIBRARY_PATH
 set PATH $PATH /home/username/anaconda3/bin
 set PATH $PATH /home/username/bin

@@ -92,37 +92,37 @@
 <ol>
 <li>编译 hdf5</li>
 </ol>
-<pre><code>wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.20/src/hdf5-1.8.20.tar.bz2 #集群若无法联网，自行下载导入服务器
+<pre tabindex="0"><code>wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.20/src/hdf5-1.8.20.tar.bz2 #集群若无法联网，自行下载导入服务器
 tar -jxvf hdf5-1.8.20.tar.bz2
 cd hdf5-1.8.20
 ./configure --prefix=/xxx/hdf5-1.8.20 --enable-cxx
 make
 make isntall
 </code></pre><p>可在 <code>make</code> 后使用 <code>make check</code> 检查安装是否成功，安装完成后在安装目录 <code>hdf5-1.8.20/lib</code> 下检查是否生成 libhdf5_cpp.so，加入环境变量</p>
-<pre><code>export PATH=$PATH:/xxx/hdf5-1.8.20/bin
+<pre tabindex="0"><code>export PATH=$PATH:/xxx/hdf5-1.8.20/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/xxx/hdf5-1.8.20/lib
 export CPATH=$CPATH:/xxx/hdf5-1.8.20/include
 </code></pre><ol start="2">
 <li>编译 boost</li>
 </ol>
-<pre><code>wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
+<pre tabindex="0"><code>wget https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.bz2
 tar -jxvf boost_1_68_0.tar.bz2
 cd boost_1_68_0
 ./bootstrap.sh --prefix=/xxx/boost_1_68_0
 </code></pre><p>生成 project-config.jam，编辑该文加，在末尾加入 <code>using mpi ;</code> ，路径可通过 <code>which mpicc</code> 查询，加入，</p>
-<pre><code>using mpi : /xxx/bin/mpicc ;
+<pre tabindex="0"><code>using mpi : /xxx/bin/mpicc ;
 </code></pre><p>继续编译，</p>
-<pre><code>./b2
+<pre tabindex="0"><code>./b2
 ./b2 install
 </code></pre><p>编译完成后，检查安装目录下存在 libboost_mpi.so、libboost_mpi.a 等。</p>
 <ol start="3">
 <li>编译 almaBTE</li>
 </ol>
-<pre><code>wget http://www.almabte.eu/wp-content/uploads/2018/10/almabte-v1.3.2.tar.gz
+<pre tabindex="0"><code>wget http://www.almabte.eu/wp-content/uploads/2018/10/almabte-v1.3.2.tar.gz
 tar -zxvf almabte-v1.3.2.tar.gz
 cd almabte-v1.3.2
 </code></pre><p>修改 CMakeLists.txt，寻找 <code># Find some components from Boost</code> 和 <code># Try to find hdf5 in the system</code> ，修改如下，</p>
-<pre><code># Find some components from Boost.
+<pre tabindex="0"><code># Find some components from Boost.
 set(BOOST_ROOT &quot;/xxx/boost_1_68_0&quot;) #安装目录
 find_package(Boost COMPONENTS system filesystem mpi serialization log REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
@@ -138,7 +138,7 @@ include_directories(${HDF5_INCLUDE_DIRS})
 link_directories(${HDF5_LIBRARY_DIRS})
 set(HDF5_LIBS ${HDF5_C_LIBRARIES} ${HDF5_CXX_LIBRARIES})
 </code></pre><p>继续编译，</p>
-<pre><code>mkdir build
+<pre tabindex="0"><code>mkdir build
 cd build
 cmake ..
 make all
@@ -158,7 +158,7 @@ make test # 最后显示 100% tests passed, 0 tests failed out of 35，编译成
   
 <nav class="post-nav">
   <span class="nav-prev">&larr; <a href="/post/2018/08/08/hello-fish-shell/">Hello fish shell</a></span>
-  <span class="nav-next"><a href="/post/2022/01/09/logseq-%E7%9A%84-zotero-%E9%85%8D%E7%BD%AE%E5%8F%8A-git-%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%90%8C%E6%AD%A5/">Logseq 的 Zotero 配置及 Git 版本控制同步</a> &rarr;</span>
+  <span class="nav-next"><a href="/post/2021/09/05/win10-%E5%AE%B6%E5%BA%AD%E7%89%88%E5%86%85%E7%BD%91%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6/">win10 家庭版内网远程控制</a> &rarr;</span>
 </nav>
 
 
